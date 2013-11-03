@@ -14,11 +14,15 @@ var _         = atb.underscore;
 var app       = express();
 var http      = require("http");
 var httpapp   = http.createServer(app);
-atb.enableHighAvailability(http);
+// --
+atb.enableHighAvailability(http);   // drastically helps under load.
+atb.appDefaultRoutes(app, express); // cookies,bodyparser,gzip, and 503-on-overload.
 // -- MAIN APP CODE --
+
 app.get('/', function(req, res){
   res.send('Hello World');
 });
+
 // -- END OF APP -- 
 app.use("/_lib", express.static(buttress.clientLibDir));
 var server = app.listen(process.env.PORT||80);
