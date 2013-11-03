@@ -1,6 +1,8 @@
 Buttress for Node.js
 =============
 
+NOTE: Butress is currently experimental -- it will change often. Use at your own risk!
+
 Supportive rapid prototyping library for NodeJS that provides both server and client helpers.
 
 SERVER-SIDE
@@ -17,7 +19,6 @@ Providing access to the client-side files is simple via a pass-through in your n
 
 rtpipe
 ---
-
 
 
 
