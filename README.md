@@ -1,15 +1,46 @@
 Buttress for Node.js
 =============
 
-NOTE: Buttress is currently experimental -- it will change often. Use at your own risk!
+*NOTE: Buttress is currently experimental -- it will change often. Use at your own risk!*
 
 Supportive rapid prototyping library for NodeJS that provides both server and client helpers.
 
-SERVER-SIDE
-===
+```js
+// Get the party started...
+var buttress  = require('buttress');
+var atb       = buttress.atb()({}); // the AppToolBelt!
+var express   = atb.express;
+var _         = atb.underscore;
+var app       = express();
+var http      = require("http");
+var httpapp   = http.createServer(app);
+atb.enableHighAvailability(http);
+// -- MAIN APP CODE --
+app.get('/', function(req, res){
+  res.send('Hello World');
+});
+// -- END OF APP -- 
+app.use("/_lib", express.static(buttress.clientLibDir));
+var server = app.listen(process.env.PORT||80);
+// -- WHEN APP ENDS --
+process.on('SIGTERM', function () {
+  server.close();
+  atb.onShutdown();
+  return process.exit(); 
+}
+```
 
-CLIENT-SIDE
-===
+## Installation
+
+    $ npm install buttress
+
+
+## SERVER-SIDE 
+
+
+
+
+## CLIENT-SIDE
 
 Buttress includes a handful of helpful javsacript modules and assets to make life easier. It also provides counter-parts to some of the server-side capabilities.
 

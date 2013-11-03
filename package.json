@@ -1,12 +1,13 @@
 {
   "name": "Buttress",
+  "version": "0.0.1",
   "description": "Buttress -  Supportive rapid prototyping library for NodeJS that provides both server and client helpers.",
   "author": "Adam Kumpf <akumpf@gmail.com>",
   "contributors": [
     {
       "name": "Adam Kumpf",
       "email": "akumpf@gmail.com"
-    },
+    }, 
     {
       "name": "The Chaos Collective",
       "email": "hello@chaoscollective.org"
