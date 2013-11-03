@@ -41,7 +41,6 @@ exports.escapeHTML        = function(msg){
 // --
 exports.enableHighAvailability = function(http){
   log3("Enabling (posix) high availibility -> go go go!");
-  var uid = parseInt(process.env.SUDO_UID, 10); 
   try{
     var posix   = require('posix');
     var limits  = posix.getrlimit('nofile');
