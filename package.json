@@ -10,9 +10,10 @@
     "requirejs": ">= 2.1.6",
     "sockjs": ">= 0.3.7",
     "posix": "*",
-    "less": "*"
+    "less": "*",
+    "toobusy": "*"
   },
   "engine": "node >= 0.10.0",
   "main": "index",
-  "repository": "git://github.com/akumpf/FiddlewaxBase"
+  "repository": "git://github.com/akumpf/FiddlewaxBase.git"
 } 

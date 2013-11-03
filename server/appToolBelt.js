@@ -50,5 +50,22 @@ exports.enableHighAvailability = function(http){
   http.globalAgent.maxSockets = limitsNow.soft;
 };
 // --
+var toobusy = null;
+exports.appDefaultRoutes = function(app, express){
+  // middleware which blocks requests when we're too busy
+  toobusy = toobusy||require('toobusy');
+  app.use(function(req, res, next) {
+    if (toobusy()) return res.send(503, "I'm busy right now, sorry. Try back in a bit.");
+    next();
+  });
+  // --
+  app.use(express.compress()); // gzip (make things small before sending)
+  app.use(express.bodyParser({keepExtensions: true}));
+  app.use(express.cookieParser());
+};
+exports.onShutdown = function(){
+  if(toobusy) toobusy.shutdown();
+};
+// --
 return exports;
 };
