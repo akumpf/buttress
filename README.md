@@ -1,7 +1,7 @@
 Buttress for Node.js
 =============
 
-NOTE: Butress is currently experimental -- it will change often. Use at your own risk!
+NOTE: Buttress is currently experimental -- it will change often. Use at your own risk!
 
 Supportive rapid prototyping library for NodeJS that provides both server and client helpers.
 
@@ -15,11 +15,10 @@ Buttress includes a handful of helpful javsacript modules and assets to make lif
 
 Providing access to the client-side files is simple via a pass-through in your node server app.js. Something like this is usually placed near the end of your code:
 
-    app.use("/_lib", express.static(butress.clientLibDir));
+    app.use("/_lib", express.static(buttress.clientLibDir));
 
 rtpipe
 ---
-
 
 
 
