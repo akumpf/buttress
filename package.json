@@ -1,6 +1,6 @@
 {
-  "name": "Butress",
-  "description": "Butress -  Supportive rapid prototyping library for NodeJS that provides both server and client helpers.",
+  "name": "Buttress",
+  "description": "Buttress -  Supportive rapid prototyping library for NodeJS that provides both server and client helpers.",
   "author": "Adam Kumpf <akumpf@gmail.com>",
   "contributors": [
     {
@@ -25,6 +25,5 @@
   },
   "engine": "node >= 0.10.0",
   "main": "index",
-  "repository": "git://github.com/akumpf/butress.git"
+  "repository": "git://github.com/akumpf/buttress.git"
 } 
- 
