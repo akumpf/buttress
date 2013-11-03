@@ -1,7 +1,17 @@
 {
-  "name": "FiddlewaxBase",
-  "description": "Fiddlewax Rapid Prototyping library for NodeJS (both server and client).",
+  "name": "Butress",
+  "description": "Butress -  Rapid Prototyping library for NodeJS that provides both server and client helpers.",
   "author": "Adam Kumpf <akumpf@gmail.com>",
+  "contributors": [
+    {
+      "name": "Adam Kumpf",
+      "email": "akumpf@gmail.com"
+    },
+    {
+      "name": "The Chaos Collective",
+      "email": "hello@chaoscollective.org"
+    }
+  ],
   "dependencies": {
     "express": ">= 3.0.x",
     "underscore": ">= 1.4.x",
@@ -15,5 +25,6 @@
   },
   "engine": "node >= 0.10.0",
   "main": "index",
-  "repository": "git://github.com/akumpf/FiddlewaxBase.git"
+  "repository": "git://github.com/akumpf/butress.git"
 } 
+ 
