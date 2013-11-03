@@ -23,11 +23,11 @@ app.get('/', function(req, res){
 app.use("/_lib", express.static(buttress.clientLibDir));
 var server = app.listen(process.env.PORT||80);
 // -- WHEN APP ENDS --
-process.on('SIGTERM', function () {
+process.on('SIGTERM', function(){
   server.close();
   atb.onShutdown();
   return process.exit(); 
-}
+});
 ```
 
 ## Installation
@@ -37,8 +37,13 @@ process.on('SIGTERM', function () {
 
 ## SERVER-SIDE 
 
+### atb: the app toolbelt
 
+### lessr: auto-updating less compiler
 
+### reqjs: javascript module combiner
+
+### rtpipe: friendlier websockets
 
 ## CLIENT-SIDE
 
@@ -48,8 +53,8 @@ Providing access to the client-side files is simple via a pass-through in your n
 
     app.use("/_lib", express.static(buttress.clientLibDir));
 
-rtpipe
----
+
+
 
 
 

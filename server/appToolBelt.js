@@ -41,13 +41,19 @@ exports.escapeHTML        = function(msg){
 // --
 exports.enableHighAvailability = function(http){
   log3("Enabling (posix) high availibility -> go go go!");
-  var posix   = require('posix');
-  var limits  = posix.getrlimit('nofile');
-  log('* Default limits: soft=' + limits.soft + ', hard=' + limits.hard); 
-  posix.setrlimit('nofile', { soft: 16384, hard: 32768 });
-  var limitsNow = posix.getrlimit('nofile');
-  log('* --> New limits: soft=' + limitsNow.soft + ', hard=' + limitsNow.hard);
-  http.globalAgent.maxSockets = limitsNow.soft;
+  var uid = parseInt(process.env.SUDO_UID, 10); 
+  try{
+    var posix   = require('posix');
+    var limits  = posix.getrlimit('nofile');
+    log('* Default limits: soft=' + limits.soft + ', hard=' + limits.hard); 
+    posix.setrlimit('nofile', { soft: 16384, hard: 32768 });
+    var limitsNow = posix.getrlimit('nofile');
+    log('* --> New limits: soft=' + limitsNow.soft + ', hard=' + limitsNow.hard);
+    http.globalAgent.maxSockets = limitsNow.soft;
+  }catch(ex){
+    console.log(ex); 
+    log7("* cannot enable high availability; no permission?");
+  }
 };
 // --
 var toobusy = null;
