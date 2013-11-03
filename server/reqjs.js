@@ -12,9 +12,9 @@ module.exports = function(settings){
   // --
   if(!settings) return log9(myname+"No settings object?");
   // --
-  var baseUrl = settings.baseUrl || "/NETFS/ChaosLibClient/jsmods";
+  var baseUrl = settings.baseUrl || (__dirname+"/../client/jsmods");
   // --
-  var pathToR = __dirname+"/node_modules/requirejs/bin/r.js";
+  var pathToR = __dirname+"/../node_modules/requirejs/bin/r.js";
   exports.optimize = function(name, absMainJSDir, autoUpdate, absOutFile){
     var rConfig = '-o baseUrl='+baseUrl+' ';
     rConfig += 'paths.'+name+'='+absMainJSDir+'/'+name+' ';
@@ -60,4 +60,4 @@ module.exports = function(settings){
   };
   // --
   return exports;
-};
+}; 
