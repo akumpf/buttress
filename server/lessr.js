@@ -7,10 +7,27 @@ var fs      = require("fs");
 // --
 exports.addFile = function(absLessFile, absCSSFile, autoUpdate, options){
   var updates = 0;
+  var optimizing = false;
+  var runWhenDone = false;
+  function onOptDone(){
+    optimizing = false;
+    if(runWhenDone){
+      runWhenDone = false;
+      doOptimization();
+    }
+  }
   function doOptimization(){
+    if(optimizing){
+      runWhenDone = true;
+      return console.log(myname+"busy, will re-run shortly.");
+    }
+    optimizing = true;
     var t0 = new Date().getTime();
     fs.readFile(absLessFile, function(err, data){
-      if(err) return console.log(err);
+      if(err){
+        console.log(err);
+        return onOptDone();
+      }
       // --
       try{
         var dataString = (data||"").toString();
@@ -29,18 +46,20 @@ exports.addFile = function(absLessFile, absCSSFile, autoUpdate, options){
           fs.writeFileSync(absCSSFile, cssString, 'utf8');
           var t1 = new Date().getTime() - t0;
           console.log(myname+"created css in "+t1+"ms"); 
+          onOptDone();
         });
       }catch(ex){
         console.log(myname+"error in parsing");
         console.log(ex);
+        onOptDone();
       } 
       if(updates === 0 && autoUpdate){
         console.log(myname+"adding autoUpdate.");
         fs.watchFile(absLessFile, {interval: options.autoMS||5007}, function (curr, prev) {
-          if(prev.size.toString() !== curr.size.toString()){
+          if(prev.mtime !== curr.mtime){
             doOptimization();
           } 
-        });
+        }); 
       }
       updates++;
     });
