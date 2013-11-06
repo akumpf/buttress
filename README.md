@@ -68,7 +68,46 @@ Note that client-side libraries are split into 3 parts:
 3. **jsworkers**: stand-alone webworkers for heavy tasks.
 
 
+## Open Source License
 
+All new code by akumpf is licensed as open source under the MIT License.
 
+```
+The MIT License (MIT)
 
+Copyright (c) 2013 Adam Kumpf
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
+
+All other open source code is licensed as indicated and included simply out of convenience. You should really go check out their work directly. It's pretty awesome.
+
+jQuery: https://github.com/jquery/jquery
+underscore: https://github.com/jashkenas/underscore
+d3: https://github.com/mbostock/d3
+requirejs: https://github.com/jrburke/requirejs
+less: https://github.com/less/less.js/
+lame: http://lame.sourceforge.net/
+tuna: https://github.com/Dinahmoe/tuna
+sockjs: https://github.com/sockjs
+filesaver: http://purl.eligrey.com/github/FileSaver.js
+bbq: http://benalman.com/projects/jquery-bbq-plugin/
+dsp: https://github.com/corbanbrook/dsp.js/
+linkify: http://benalman.com/code/test/js-linkify/
+markdown: https://github.com/evilstreak/markdown-js
 
