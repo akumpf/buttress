@@ -78,7 +78,6 @@
   }
   window.vendorPrefix = vendor;
   // FALLBACKS...
-  //* 
   if(!window.requestAnimationFrame)
     window.requestAnimationFrame = function(callback, element) {
       var currTime = new Date().getTime();
@@ -109,12 +108,20 @@
   // --
   if(!navigator.temporaryStorage && window.storageInfo){
     console.warn("SHIM: storageInfo -> temporaryStorage");
-    navigator.temporaryStorage = {};
-    navigator.temporaryStorage.queryUsageAndQuota = function(success, error){
-      window.storageInfo.queryUsageAndQuota("TEMPORARY", success, error); 
-    }
+    navigator.temporaryStorage = {
+      queryUsageAndQuota: function(success, error){
+        window.storageInfo.queryUsageAndQuota(window.TEMPORARY||0, success, error); 
+      }
+    };
   }
-  //  */
+  if(!navigator.persistentStorage && window.storageInfo){
+    console.warn("SHIM: storageInfo -> persistentStorage");
+    navigator.persistentStorage = {
+      queryUsageAndQuota: function(success, error){
+        window.storageInfo.queryUsageAndQuota(window.PERSISTENT||1, success, error); 
+      }
+    };
+  }
 }());
 // --
 window.isMobile   = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|mobile)/); 
@@ -203,45 +210,65 @@ $.fn.dontScrollParent = function(exceptions){
 };
 // --
 
-// jQuery addTouch
-// see: http://www.jquery4u.com/plugins/10-jquery-ipad-code-snippets-plugins/
+// jQuery addTouch 
+// modified from: http://www.jquery4u.com/plugins/10-jquery-ipad-code-snippets-plugins/
 $.fn.addTouch = function(){
   this.each(function(i,el){
-    $(el).bind('touchstart touchmove touchend touchcancel',function(){
+    $(el).bind('touchstart touchmove touchend touchcancel', function(){
       //we pass the original event object because the jQuery event
       //object is normalized to w3c specs and does not provide the TouchList
       handleTouch(event);
     });
   });
- 
-  var handleTouch = function(event)
-  {
-    var touches = event.changedTouches,
-            first = touches[0],
-            type = '';
- 
-    switch(event.type)
-    {
-      case 'touchstart':
-        type = 'mousedown';
-        break;
- 
-      case 'touchmove':
-        type = 'mousemove';
-        event.preventDefault();
-        break;
- 
-      case 'touchend':
-        type = 'mouseup';
-        break;
- 
-      default:
-        return;
+  var histID = {};
+  var handleTouch = function(event){
+    var touches = event.changedTouches;
+    for(var i=0; i<touches.length; i++){
+      var first = touches[i]; 
+      var type = '';
+      var target2 = first.target;
+      var id = first.identifier||first.id;
+      // --
+      switch(event.type){
+        case 'touchstart':
+          type = 'mousedown';
+          histID[id] = first.target;
+          break;
+        case 'touchmove':
+          type = 'mousemove';
+          target2 = document.elementFromPoint(first.clientX, first.clientY);
+          break;
+        case 'touchend':
+        case 'touchcancel':
+          type = 'mouseup';
+          target2 = document.elementFromPoint(first.clientX, first.clientY);
+          delete histID[id]; 
+          break;
+        default:
+          return;
+      }
+      // --
+      if(type === "mousemove"){
+        // Manually trigger out/over since iOS won't give us that info!
+        if(target2 !== histID[id]){
+          var simEvent1 = document.createEvent('MouseEvent');
+          simEvent1.initMouseEvent("mouseout", true, true, window, 1, first.screenX, first.screenY, first.clientX, first.clientY, false, false, false, false, 0, null);
+          histID[id].dispatchEvent(simEvent1);
+          // --
+          var simEvent2 = document.createEvent('MouseEvent');
+          simEvent2.initMouseEvent("mouseover", true, true, window, 1, first.screenX, first.screenY, first.clientX, first.clientY, false, false, false, false, 0, null);
+          target2.dispatchEvent(simEvent2);
+          // --
+          histID[id] = target2;
+        }
+      }
+      // --
+      var simEvent = document.createEvent('MouseEvent');
+      simEvent.initMouseEvent(type, true, true, window, 1, first.screenX, first.screenY, first.clientX, first.clientY, false, false, false, false, 0, null);
+      target2.dispatchEvent(simEvent);
+      // --
     }
- 
-    var simulatedEvent = document.createEvent('MouseEvent');
-    simulatedEvent.initMouseEvent(type, true, true, window, 1, first.screenX, first.screenY, first.clientX, first.clientY, false, false, false, false, 0/*left*/, null);
-    first.target.dispatchEvent(simulatedEvent);
+    event.preventDefault();
   };
 };
 
