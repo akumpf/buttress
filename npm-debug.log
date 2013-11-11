@@ -1,0 +1,232 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'publish' ]
+2 info using npm@1.3.11
+3 info using node@v0.10.21
+4 verbose node symlink /usr/bin/node
+5 verbose publish [ '.' ]
+6 verbose cache add [ '.', null ]
+7 verbose cache add name=undefined spec="." args=[".",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: '.',
+8 verbose parsed url   path: '.',
+8 verbose parsed url   href: '.' }
+9 silly lockFile 3a52ce78- .
+10 verbose lock . /home/admin/.npm/3a52ce78-.lock
+11 verbose tar pack [ '/home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/tmp.tgz',
+11 verbose tar pack   '.' ]
+12 verbose tarball /home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/tmp.tgz
+13 verbose folder .
+14 silly lockFile 1f1177db-tar tar://.
+15 verbose lock tar://. /home/admin/.npm/1f1177db-tar.lock
+16 silly lockFile 1bb16066-715504-0-763797985156998-tmp-tgz tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/tmp.tgz
+17 verbose lock tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/tmp.tgz /home/admin/.npm/1bb16066-715504-0-763797985156998-tmp-tgz.lock
+18 silly lockFile 1f1177db-tar tar://.
+19 silly lockFile 1f1177db-tar tar://.
+20 silly lockFile 1bb16066-715504-0-763797985156998-tmp-tgz tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/tmp.tgz
+21 silly lockFile 1bb16066-715504-0-763797985156998-tmp-tgz tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/tmp.tgz
+22 verbose tar unpack /home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/tmp.tgz
+23 silly lockFile 0b34015e-715504-0-763797985156998-package tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/package
+24 verbose lock tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/package /home/admin/.npm/0b34015e-715504-0-763797985156998-package.lock
+25 silly lockFile 1bb16066-715504-0-763797985156998-tmp-tgz tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/tmp.tgz
+26 verbose lock tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/tmp.tgz /home/admin/.npm/1bb16066-715504-0-763797985156998-tmp-tgz.lock
+27 silly gunzTarPerm modes [ '755', '644' ]
+28 silly gunzTarPerm extractEntry package.json
+29 silly gunzTarPerm extractEntry .npmignore
+30 silly gunzTarPerm extractEntry README.md
+31 silly gunzTarPerm extractEntry LICENSE
+32 silly gunzTarPerm extractEntry index.js
+33 silly gunzTarPerm extractEntry client/img/banner_135x135.jpg
+34 silly gunzTarPerm extractEntry client/img/banner_720x135.jpg
+35 silly gunzTarPerm extractEntry client/img/chaos_favicon.png
+36 silly gunzTarPerm extractEntry client/img/share_facebook.svg
+37 silly gunzTarPerm extractEntry client/img/share_googleplus.svg
+38 silly gunzTarPerm extractEntry client/img/share_twitter.svg
+39 silly gunzTarPerm extractEntry client/jscore/init_browser.js
+40 silly gunzTarPerm extractEntry client/jscore/jquery-ui.js
+41 silly gunzTarPerm extractEntry client/jscore/jquery.js
+42 silly gunzTarPerm extractEntry client/jscore/less.js
+43 silly gunzTarPerm extractEntry client/jscore/require.js
+44 silly gunzTarPerm extractEntry client/jscore/underscore.js
+45 silly gunzTarPerm extractEntry client/jsmods/DSP.js
+46 silly gunzTarPerm extractEntry client/jsmods/fnq.js
+47 silly gunzTarPerm extractEntry client/jsmods/lessadder.js
+48 silly gunzTarPerm extractEntry client/jsmods/linkify.js
+49 silly gunzTarPerm extractEntry client/jsmods/markdown.js
+50 silly gunzTarPerm extractEntry client/jsmods/d3.js
+51 silly gunzTarPerm extractEntry client/jsmods/markdown.old.js
+52 silly gunzTarPerm extractEntry client/jsmods/readme.js
+53 silly gunzTarPerm extractEntry client/jsmods/rtpipe.js
+54 silly gunzTarPerm extractEntry client/jsmods/saveas.js
+55 silly gunzTarPerm extractEntry client/jsmods/sockjs.js
+56 silly gunzTarPerm extractEntry client/jsmods/community.js
+57 silly gunzTarPerm extractEntry client/jsmods/str.js
+58 silly gunzTarPerm extractEntry client/jsmods/_jquery_infinitescroll.js
+59 silly gunzTarPerm extractEntry client/jsmods/teq.js
+60 silly gunzTarPerm extractEntry client/jsmods/_jquery_bbq.js
+61 silly gunzTarPerm extractEntry client/jsmods/ui.js
+62 silly gunzTarPerm extractEntry client/jsmods/Tuna.js
+63 silly gunzTarPerm extractEntry client/jsmods/usercam.js
+64 silly gunzTarPerm extractEntry client/jsmods/markdown.mod.js
+65 silly gunzTarPerm extractEntry client/jsworkers/lame/encoder.js
+66 silly gunzTarPerm extractEntry client/jsworkers/lame/libmp3lame.full.js
+67 silly gunzTarPerm extractEntry client/jsworkers/lame/libmp3lame.js
+68 silly gunzTarPerm extractEntry client/jsworkers/wav/encoder.js
+69 silly gunzTarPerm extractEntry client/less/core.less
+70 silly gunzTarPerm extractEntry client/less/readme.less
+71 silly gunzTarPerm extractEntry client/less/ui.less
+72 silly gunzTarPerm extractEntry server/appToolBelt.js
+73 silly gunzTarPerm extractEntry server/db.js
+74 silly gunzTarPerm extractEntry server/db_projs.js
+75 silly gunzTarPerm extractEntry server/lessr.js
+76 silly gunzTarPerm extractEntry server/log.js
+77 silly gunzTarPerm extractEntry server/reqjs.js
+78 silly gunzTarPerm extractEntry server/rtpipe.js
+79 silly gunzTarPerm extractEntry server/sessionStore.js
+80 silly lockFile 0b34015e-715504-0-763797985156998-package tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/package
+81 silly lockFile 0b34015e-715504-0-763797985156998-package tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/package
+82 silly lockFile 1bb16066-715504-0-763797985156998-tmp-tgz tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/tmp.tgz
+83 silly lockFile 1bb16066-715504-0-763797985156998-tmp-tgz tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/tmp.tgz
+84 verbose tar pack [ '/home/admin/.npm/buttress/0.0.4/package.tgz',
+84 verbose tar pack   '/home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/package' ]
+85 verbose tarball /home/admin/.npm/buttress/0.0.4/package.tgz
+86 verbose folder /home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/package
+87 silly lockFile 0b34015e-715504-0-763797985156998-package tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/package
+88 verbose lock tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/package /home/admin/.npm/0b34015e-715504-0-763797985156998-package.lock
+89 silly lockFile 9168360f-n-npm-buttress-0-0-4-package-tgz tar:///home/admin/.npm/buttress/0.0.4/package.tgz
+90 verbose lock tar:///home/admin/.npm/buttress/0.0.4/package.tgz /home/admin/.npm/9168360f-n-npm-buttress-0-0-4-package-tgz.lock
+91 silly lockFile 0b34015e-715504-0-763797985156998-package tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/package
+92 silly lockFile 0b34015e-715504-0-763797985156998-package tar:///home/admin/tmp/npm-23085-S9lOyM54/1384194715504-0.763797985156998/package
+93 silly lockFile 9168360f-n-npm-buttress-0-0-4-package-tgz tar:///home/admin/.npm/buttress/0.0.4/package.tgz
+94 silly lockFile 9168360f-n-npm-buttress-0-0-4-package-tgz tar:///home/admin/.npm/buttress/0.0.4/package.tgz
+95 silly lockFile bb9a0b11-admin-npm-buttress-0-0-4-package /home/admin/.npm/buttress/0.0.4/package
+96 verbose lock /home/admin/.npm/buttress/0.0.4/package /home/admin/.npm/bb9a0b11-admin-npm-buttress-0-0-4-package.lock
+97 silly lockFile bb9a0b11-admin-npm-buttress-0-0-4-package /home/admin/.npm/buttress/0.0.4/package
+98 silly lockFile bb9a0b11-admin-npm-buttress-0-0-4-package /home/admin/.npm/buttress/0.0.4/package
+99 verbose tar unpack /home/admin/.npm/buttress/0.0.4/package.tgz
+100 silly lockFile 669b8888-admin-npm-buttress-0-0-4-package tar:///home/admin/.npm/buttress/0.0.4/package
+101 verbose lock tar:///home/admin/.npm/buttress/0.0.4/package /home/admin/.npm/669b8888-admin-npm-buttress-0-0-4-package.lock
+102 silly lockFile 9168360f-n-npm-buttress-0-0-4-package-tgz tar:///home/admin/.npm/buttress/0.0.4/package.tgz
+103 verbose lock tar:///home/admin/.npm/buttress/0.0.4/package.tgz /home/admin/.npm/9168360f-n-npm-buttress-0-0-4-package-tgz.lock
+104 silly gunzTarPerm modes [ '755', '644' ]
+105 silly gunzTarPerm extractEntry package.json
+106 silly gunzTarPerm extractEntry .npmignore
+107 silly gunzTarPerm extractEntry README.md
+108 silly gunzTarPerm extractEntry LICENSE
+109 silly gunzTarPerm extractEntry index.js
+110 silly gunzTarPerm extractEntry client/img/banner_135x135.jpg
+111 silly gunzTarPerm extractEntry client/img/banner_720x135.jpg
+112 silly gunzTarPerm extractEntry client/img/chaos_favicon.png
+113 silly gunzTarPerm extractEntry client/img/share_facebook.svg
+114 silly gunzTarPerm extractEntry client/img/share_googleplus.svg
+115 silly gunzTarPerm extractEntry client/img/share_twitter.svg
+116 silly gunzTarPerm extractEntry client/jscore/init_browser.js
+117 silly gunzTarPerm extractEntry client/jscore/jquery-ui.js
+118 silly gunzTarPerm extractEntry client/jscore/jquery.js
+119 silly gunzTarPerm extractEntry client/jscore/less.js
+120 silly gunzTarPerm extractEntry client/jscore/require.js
+121 silly gunzTarPerm extractEntry client/jscore/underscore.js
+122 silly gunzTarPerm extractEntry client/jsmods/DSP.js
+123 silly gunzTarPerm extractEntry client/jsmods/fnq.js
+124 silly gunzTarPerm extractEntry client/jsmods/lessadder.js
+125 silly gunzTarPerm extractEntry client/jsmods/linkify.js
+126 silly gunzTarPerm extractEntry client/jsmods/markdown.js
+127 silly gunzTarPerm extractEntry client/jsmods/d3.js
+128 silly gunzTarPerm extractEntry client/jsmods/markdown.old.js
+129 silly gunzTarPerm extractEntry client/jsmods/readme.js
+130 silly gunzTarPerm extractEntry client/jsmods/rtpipe.js
+131 silly gunzTarPerm extractEntry client/jsmods/saveas.js
+132 silly gunzTarPerm extractEntry client/jsmods/sockjs.js
+133 silly gunzTarPerm extractEntry client/jsmods/community.js
+134 silly gunzTarPerm extractEntry client/jsmods/str.js
+135 silly gunzTarPerm extractEntry client/jsmods/_jquery_infinitescroll.js
+136 silly gunzTarPerm extractEntry client/jsmods/teq.js
+137 silly gunzTarPerm extractEntry client/jsmods/_jquery_bbq.js
+138 silly gunzTarPerm extractEntry client/jsmods/ui.js
+139 silly gunzTarPerm extractEntry client/jsmods/Tuna.js
+140 silly gunzTarPerm extractEntry client/jsmods/usercam.js
+141 silly gunzTarPerm extractEntry client/jsmods/markdown.mod.js
+142 silly gunzTarPerm extractEntry client/jsworkers/lame/encoder.js
+143 silly gunzTarPerm extractEntry client/jsworkers/lame/libmp3lame.full.js
+144 silly gunzTarPerm extractEntry client/jsworkers/lame/libmp3lame.js
+145 silly gunzTarPerm extractEntry client/jsworkers/wav/encoder.js
+146 silly gunzTarPerm extractEntry client/less/core.less
+147 silly gunzTarPerm extractEntry client/less/readme.less
+148 silly gunzTarPerm extractEntry client/less/ui.less
+149 silly gunzTarPerm extractEntry server/appToolBelt.js
+150 silly gunzTarPerm extractEntry server/db.js
+151 silly gunzTarPerm extractEntry server/db_projs.js
+152 silly gunzTarPerm extractEntry server/lessr.js
+153 silly gunzTarPerm extractEntry server/log.js
+154 silly gunzTarPerm extractEntry server/reqjs.js
+155 silly gunzTarPerm extractEntry server/rtpipe.js
+156 silly gunzTarPerm extractEntry server/sessionStore.js
+157 silly lockFile 669b8888-admin-npm-buttress-0-0-4-package tar:///home/admin/.npm/buttress/0.0.4/package
+158 silly lockFile 669b8888-admin-npm-buttress-0-0-4-package tar:///home/admin/.npm/buttress/0.0.4/package
+159 silly lockFile 9168360f-n-npm-buttress-0-0-4-package-tgz tar:///home/admin/.npm/buttress/0.0.4/package.tgz
+160 silly lockFile 9168360f-n-npm-buttress-0-0-4-package-tgz tar:///home/admin/.npm/buttress/0.0.4/package.tgz
+161 verbose chmod /home/admin/.npm/buttress/0.0.4/package.tgz 644
+162 verbose chown /home/admin/.npm/buttress/0.0.4/package.tgz [ 1000, 27 ]
+163 silly lockFile 3a52ce78- .
+164 silly lockFile 3a52ce78- .
+165 silly publish { name: 'buttress',
+165 silly publish   version: '0.0.4',
+165 silly publish   description: 'Buttress is a supportive rapid prototyping library for NodeJS that provides both server and client helpers.',
+165 silly publish   author: { name: 'Adam Kumpf', email: 'akumpf@gmail.com' },
+165 silly publish   contributors:
+165 silly publish    [ { name: 'Adam Kumpf', email: 'akumpf@gmail.com' },
+165 silly publish      { name: 'The Chaos Collective',
+165 silly publish        email: 'hello@chaoscollective.org' } ],
+165 silly publish   dependencies:
+165 silly publish    { express: '>= 3.0.x',
+165 silly publish      underscore: '>= 1.4.x',
+165 silly publish      mongodb: '>= 1.3.x',
+165 silly publish      'connect-mongo': '>= 0.3.2',
+165 silly publish      requirejs: '>= 2.1.6',
+165 silly publish      sockjs: '0.3.8',
+165 silly publish      posix: '*',
+165 silly publish      less: '*',
+165 silly publish      toobusy: '*' },
+165 silly publish   engine: 'node >= 0.10.0',
+165 silly publish   main: 'index',
+165 silly publish   repository: { type: 'git', url: 'git://github.com/akumpf/buttress.git' },
+165 silly publish   readme: 'Buttress for Node.js\n=============\n\n*NOTE: Buttress is currently experimental -- it will change often. Use at your own risk!*\n\nSupportive rapid prototyping library for NodeJS that provides both server and client helpers.\n\n```js\n// Get the party started...\nvar buttress  = require(\'buttress\');\nvar atb       = buttress.atb()({}); // the AppToolBelt!\nvar express   = atb.express;\nvar _         = atb.underscore;\nvar app       = express();\nvar http      = require("http");\nvar httpapp   = http.createServer(app);\n// --\natb.enableHighAvailability(http);   // drastically helps under load.\natb.appDefaultRoutes(app, express); // cookies,bodyparser,gzip,503-on-overload.\n// -- MAIN APP CODE --\n\napp.get(\'/\', function(req, res){\n  res.send(\'Hello World\');\n});\n\n// -- FINALIZE AND START LISTENING -- \napp.use("/_lib", express.static(buttress.clientLibDir));\nvar server = app.listen(process.env.PORT||80);\n// -- WHEN APP ENDS / CLOSES --\nprocess.on(\'SIGTERM\', function(){\n  // do anything you want before the process is killed.\n  // i.e. shutdown gracefully if possible.\n  server.close(); \n  atb.onShutdown();\n  return process.exit(); \n});\n```\n\n## Installation\n\n    $ npm install buttress\n\n\n## SERVER-SIDE \n\n### atb: the app toolbelt\n\n### lessr: auto-updating less compiler\n\n### reqjs: javascript module combiner\n\n### rtpipe: friendlier websockets\n\n## CLIENT-SIDE\n\nButtress includes a handful of helpful javsacript modules and assets to make life easier. It also provides counter-parts to some of the server-side capabilities.\n\nProviding access to the client-side files is simple via a pass-through in your node server app.js. Something like this is usually placed near the end of your code:\n\n    app.use("/_lib", express.static(buttress.clientLibDir));\n\nThis enables client-side webapps to see common assets and scripts in the `./_lib`  virtual folder.\n\nNote that client-side libraries are split into 3 parts:\n\n1. **jscore**: helpful js includes that don\'t depend on anything else.\n2. **jsmods**: requirejs modules.\n3. **jsworkers**: stand-alone webworkers for heavy tasks.\n\n\n## Open Source License\n\nAll new code by akumpf is licensed as open source under the MIT License.\n\n```\nThe MIT License (MIT)\n\nCopyright (c) 2013 Adam Kumpf\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of\nthis software and associated documentation files (the "Software"), to deal in\nthe Software without restriction, including without limitation the rights to\nuse, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of\nthe Software, and to permit persons to whom the Software is furnished to do so,\nsubject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS\nFOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR\nCOPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER\nIN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN\nCONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n```\n\nAll other open source code is licensed as indicated and included simply out of convenience. You should really go check out their work directly. It\'s pretty awesome.\n\n* jQuery: https://github.com/jquery/jquery\n* underscore: https://github.com/jashkenas/underscore\n* d3: https://github.com/mbostock/d3\n* requirejs: https://github.com/jrburke/requirejs\n* less: https://github.com/less/less.js/\n* lame: http://lame.sourceforge.net/\n* tuna: https://github.com/Dinahmoe/tuna\n* sockjs: https://github.com/sockjs\n* filesaver: http://purl.eligrey.com/github/FileSaver.js\n* bbq: http://benalman.com/projects/jquery-bbq-plugin/\n* dsp: https://github.com/corbanbrook/dsp.js/\n* linkify: http://benalman.com/code/test/js-linkify/\n* markdown: https://github.com/evilstreak/markdown-js\n\n',
+165 silly publish   readmeFilename: 'README.md',
+165 silly publish   bugs: { url: 'https://github.com/akumpf/buttress/issues' },
+165 silly publish   _id: 'buttress@0.0.4',
+165 silly publish   dist: { shasum: '6b632d2cbbeac4e035708a1e638d9d29d496457e' },
+165 silly publish   _from: '.' }
+166 verbose url raw buttress
+167 verbose url resolving [ 'https://registry.npmjs.org/', './buttress' ]
+168 verbose url resolved https://registry.npmjs.org/buttress
+169 info trying registry request attempt 1 at 18:31:58
+170 http PUT https://registry.npmjs.org/buttress
+171 http 409 https://registry.npmjs.org/buttress
+172 verbose url raw buttress
+173 verbose url resolving [ 'https://registry.npmjs.org/', './buttress' ]
+174 verbose url resolved https://registry.npmjs.org/buttress
+175 info trying registry request attempt 1 at 18:31:58
+176 http GET https://registry.npmjs.org/buttress
+177 http 200 https://registry.npmjs.org/buttress
+178 error publish fail Cannot publish over existing version.
+178 error publish fail Update the 'version' field in package.json and try again.
+178 error publish fail
+178 error publish fail If the previous version was published in error, see:
+178 error publish fail     npm help unpublish
+178 error publish fail
+178 error publish fail To automatically increment version numbers, see:
+178 error publish fail     npm help version
+179 error System Linux 3.2.0-54-virtual
+180 error command "/usr/bin/node" "/usr/bin/npm" "publish"
+181 error cwd /NETFS/buttress
+182 error node -v v0.10.21
+183 error npm -v 1.3.11
+184 error code EPUBLISHCONFLICT
+185 verbose exit [ 1, true ]

@@ -67,7 +67,6 @@ Note that client-side libraries are split into 3 parts:
 2. **jsmods**: requirejs modules.
 3. **jsworkers**: stand-alone webworkers for heavy tasks.
 
-
 ## Open Source License
 
 All new code by akumpf is licensed as open source under the MIT License.
@@ -110,4 +109,7 @@ All other open source code is licensed as indicated and included simply out of c
 * dsp: https://github.com/corbanbrook/dsp.js/
 * linkify: http://benalman.com/code/test/js-linkify/
 * markdown: https://github.com/evilstreak/markdown-js
+
+Special thanks to **The Chaos Collective (http://chaoscollective.org)** where a lot of this work started.
+
 
