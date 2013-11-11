@@ -212,7 +212,7 @@ $.fn.dontScrollParent = function(exceptions){
 
 // jQuery addTouch 
 // modified from: http://www.jquery4u.com/plugins/10-jquery-ipad-code-snippets-plugins/
-$.fn.addTouch = function(){
+$.fn.addTouch = function(lockToOrig){
   this.each(function(i,el){
     $(el).bind('touchstart touchmove touchend touchcancel', function(){
       //we pass the original event object because the jQuery event
@@ -236,19 +236,19 @@ $.fn.addTouch = function(){
           break;
         case 'touchmove':
           type = 'mousemove';
-          target2 = document.elementFromPoint(first.clientX, first.clientY);
+          if(!lockToOrig) target2 = document.elementFromPoint(first.clientX, first.clientY);
           break;
         case 'touchend':
         case 'touchcancel':
           type = 'mouseup';
-          target2 = document.elementFromPoint(first.clientX, first.clientY);
+          if(!lockToOrig) target2 = document.elementFromPoint(first.clientX, first.clientY);
           delete histID[id]; 
           break;
         default:
           return;
       }
       // --
-      if(type === "mousemove"){
+      if(!lockToOrig && type === "mousemove"){
         // Manually trigger out/over since iOS won't give us that info!
         if(target2 !== histID[id]){
           var simEvent1 = document.createEvent('MouseEvent');
