@@ -25,11 +25,12 @@ This README assumes your project's assets are set up with the following folder s
 |- app.js (main server-side node app)
 |- protected (files that get compiled or compressed)
 |   |- js
+|   |  |- main.js (main client-side js)
 |   |- style
 |      |- index.less
 |- public (public static files server from here)
     |- js
-    |   |- main.js 
+    |   |- main.js (minified version of protected js)
     |- style
     |   |- index.css (direct, or generated from less)
     |- img
@@ -69,7 +70,7 @@ app.get('/', function(req, res){
 // -- END MAIN APP CODE --
 // --
 if(DEBUG){
-  // -- Auto LESS -> CSS (only do this in the debug/dev branch)
+  // -- Auto: LESS -> CSS (only do this in the debug/dev branch)
   var lessr = buttress.lessr();
   lessr.addFile(__dirname+'/protected/style/index.less', __dirname+'/public/style/index.css', true, { 
     paths         : [__dirname+"/protected/style"],    // .less file search paths
@@ -79,6 +80,11 @@ if(DEBUG){
     //yuicompress   : true,           // use YUI compressor? 
     autoMS        : 250               // how often to check watchfile for updates.
   });
+  // -- Minify JS (from protected to public); once on app launch.
+  var reqjs = buttress.reqjs()({baseUrl: __dirname+"/protected"});
+  reqjs.optimize("main", __dirname+"/protected/js", false, __dirname+"/public/js/main.js");
+  // -- Pass through to protected JS (debug/dev branch only).
+  app.use('/js', express.static(__dirname+'/protected/js'));
 }
 // -- FINALIZE ROUTES -- 
 app.use("/_lib", express.static(buttress.clientLibDir));
