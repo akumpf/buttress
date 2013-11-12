@@ -18,6 +18,7 @@ This README assumes your project's assets are set up with the following folder s
 |- protected (files that get compiled or compressed)
 |   |- js
 |   |- style
+|      |- index.less
 |- public (public static files server from here)
     |- js
     |   |- main.js 
@@ -30,6 +31,12 @@ This README assumes your project's assets are set up with the following folder s
 On the server, `app.js` will look something like this:
 
 ```js
+// A clean little header so we know when the app is restarted.
+console.log("---------------------------");
+console.log("** Starting Node service **");
+console.log(new Date());
+var DEBUG = (process.env.NODE_ENV === "debug");
+console.log("LAUNCH MODE -- "+(DEBUG?"DEBUG":"PROD"));
 // Get the party started...
 var buttress  = require('buttress');
 var atb       = buttress.atb()({}); // the AppToolBelt!
@@ -47,6 +54,18 @@ app.get('/', function(req, res){
   res.send('Hello World');
 });
 
+// -- LESS -> CSS (only do this in the debug/dev branch)
+if(DEBUG){
+  var lessr = buttress.lessr();
+  lessr.addFile(__dirname+'/protected/style/index.less', __dirname+'/public/style/index.css', true, { 
+    paths         : [__dirname+"/protected/style"],    // .less file search paths
+    optimization  : 1,                // optimization level 1 is good (2 is unstable)
+    filename      : "index.less",     // root .less file
+    compress      : true,             // compress?
+    //yuicompress   : true,           // use YUI compressor? 
+    autoMS        : 250               // how often to check watchfile for updates.
+  });
+}
 // -- FINALIZE AND START LISTENING -- 
 app.use("/_lib", express.static(buttress.clientLibDir));
 app.use(express.static(__dirname + '/public'));
