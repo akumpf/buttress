@@ -80,10 +80,10 @@ if(DEBUG){
     autoMS        : 250               // how often to check watchfile for updates.
   });
 }
-// -- FINALIZE AND START LISTENING -- 
+// -- FINALIZE ROUTES -- 
 app.use("/_lib", express.static(buttress.clientLibDir));
 app.use(express.static(__dirname + '/public'));
-// --
+// -- START LISTENING --
 var server = app.listen(process.env.PORT||80);
 // -- WHEN APP ENDS / CLOSES --
 process.on('SIGTERM', function(){
