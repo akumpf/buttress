@@ -61,11 +61,97 @@ Providing access to the client-side files is simple via a pass-through in your n
 
 This enables client-side webapps to see common assets and scripts in the `./_lib`  virtual folder.
 
+Additionally, you'll probably want to provide a static file service for app-specific javascript, iamges, etc. in app.js like this:
+
+    app.use(express.static(__dirname + '/public'));
+
+**Ok, now on to the code that the client actually sees!**
+
 Note that client-side libraries are split into 3 parts:
 
 1. **jscore**: helpful js includes that don't depend on anything else.
 2. **jsmods**: requirejs modules.
 3. **jsworkers**: stand-alone webworkers for heavy tasks.
+
+Buttress is designed to make the client-side html simple and scalable. Here's a template for a site's `index.html` as a starting point. It assumes your assets are structured as follows:
+
+```
+|- app.js (main server-side node app)
+|- public (public static file directory)
+    |- js
+    |   |- main.js 
+    |- style
+    |   |- index.css
+    |- img
+        |- favicon.png
+```
+
+And the HTML (with lots of common things you'll probably want, like app description, etc.).
+
+```html
+<!DOCTYPE html> 
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset='utf-8' />
+    <!-- title -->
+    <title>APP_TITLE_HERE</title>
+    <meta property="og:site_name" content="APP_TITLE_HERE" />
+    <!-- desc -->
+    <meta name="description"  content="APP_DESCRIPTION_HERE" id='pageDescription'>
+    <meta property="og:title" content="APP_DESCRIPTION_HERE" id='ogTitle' />
+    <!-- app icon -->
+    <link rel='shortcut icon' type='image/png' href='/img/favicon.png'>
+    <meta property="og:image" content="APP_URL_HERE/img/favicon.png" />
+    <!-- viewport / mobile (no zooming) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- style -->
+    <link href="/style/index.css" rel="stylesheet" type="text/css" />
+    <!-- javascript from buttress via '_lib' -->
+    <script src='/_lib/jscore/jquery.js'></script>
+    <script src='/_lib/jscore/underscore.js'></script>
+    <script src='/_lib/jscore/init_browser.js'></script> 
+    <script src='/_lib/jscore/require.js'></script> 
+    <!-- app code -->
+    <script>
+      requirejs.config({baseUrl: '/', paths: {main: "js/main"}});
+      require(["main"],function(){});
+    </script> 
+  </head>
+  <body>
+  
+    APP_HTML_HERE
+    
+  </body>
+</html>
+```
+
+And `js/main.js` will look something like this:
+
+```js
+// basic requireJS setup. library module and local project module loading...
+define(["_lib/jsmods/linkify"], 
+function(linkify){
+  var exports = {};
+  var main    = exports;
+  // --
+  // make things accessible to the outside world 
+  // by adding them to 'exports'
+  
+  exports.doSomething = function(txtToMakeLinks){
+    return linkify(txtToMakeLinks);
+  };
+  
+  // --
+  function _onReady(){
+    console.log("App is ready!");
+  }
+  $(document).ready(_onReady);
+  // --
+  return exports; // return the exports.
+});
+```
 
 ## Open Source License
 
