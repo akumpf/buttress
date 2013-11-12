@@ -72,7 +72,8 @@ app.get('/', function(req, res){
 if(DEBUG){
   // -- Auto: LESS -> CSS (only do this in the debug/dev branch)
   var lessr = buttress.lessr();
-  lessr.addFile(__dirname+'/protected/style/index.less', __dirname+'/public/style/index.css', true, { 
+  lessr.addFile(__dirname+'/protected/style/index.less', 
+                __dirname+'/public/style/index.css', true, { 
     paths         : [__dirname+"/protected/style"],    // .less file search paths
     optimization  : 1,                // optimization level 1 is good (2 is unstable)
     filename      : "index.less",     // root .less file
