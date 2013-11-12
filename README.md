@@ -31,12 +31,13 @@ This README assumes your project's assets are set up with the following folder s
 On the server, `app.js` will look something like this:
 
 ```js
-// A clean little header so we know when the app is restarted.
+// A header so we know when the app is restarted.
 console.log("---------------------------");
 console.log("** Starting Node service **");
 console.log(new Date());
 var DEBUG = (process.env.NODE_ENV === "debug");
 console.log("LAUNCH MODE -- "+(DEBUG?"DEBUG":"PROD"));
+
 // Get the party started...
 var buttress  = require('buttress');
 var atb       = buttress.atb()({}); // the AppToolBelt!
@@ -48,14 +49,19 @@ var httpapp   = http.createServer(app);
 // --
 atb.enableHighAvailability(http);   // drastically helps under load.
 atb.appDefaultRoutes(app, express); // cookies,bodyparser,gzip,503-on-overload.
-// -- MAIN APP CODE --
+// --
+// -- BEGIN MAIN APP CODE --
+
 
 app.get('/', function(req, res){
   res.send('Hello World');
 });
 
-// -- LESS -> CSS (only do this in the debug/dev branch)
+
+// -- END MAIN APP CODE --
+// --
 if(DEBUG){
+  // -- Auto LESS -> CSS (only do this in the debug/dev branch)
   var lessr = buttress.lessr();
   lessr.addFile(__dirname+'/protected/style/index.less', __dirname+'/public/style/index.css', true, { 
     paths         : [__dirname+"/protected/style"],    // .less file search paths
