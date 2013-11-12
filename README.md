@@ -210,6 +210,7 @@ All other open source code is licensed as indicated and included simply out of c
 * dsp: https://github.com/corbanbrook/dsp.js/
 * linkify: http://benalman.com/code/test/js-linkify/
 * markdown: https://github.com/evilstreak/markdown-js
+* addTouch: http://www.jquery4u.com/plugins/10-jquery-ipad-code-snippets-plugins
 
 Special thanks to **The Chaos Collective (http://chaoscollective.org)** where a lot of this work started.
 

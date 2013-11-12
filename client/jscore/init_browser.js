@@ -227,7 +227,7 @@ $.fn.addTouch = function(lockToOrig){
       var first = touches[i]; 
       var type = '';
       var target2 = first.target;
-      var id = first.identifier||first.id;
+      var id = first.identifier||first.id||-2; 
       // --
       switch(event.type){
         case 'touchstart':
