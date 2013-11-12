@@ -9,9 +9,9 @@ Supportive rapid prototyping library for NodeJS that provides both server and cl
 
     $ npm install buttress
 
-## Before you get started with buttress
+### A quick note before you get started
 
-This little library is packed with goodness. But, that also means there's a lot of snippets floating around for you to use, and that may be overwhelming. 
+This little library is packed with goodness. But, that also means there are lots of snippets floating around, and that may be overwhelming. 
 
 All the code is meant to make your life easier in the long-run. It's not just a 5 line demo, but a real node.js application support structure with the details explicitly laid out. 
 
@@ -128,7 +128,7 @@ Providing access to the client-side files is simple via a pass-through in your n
 
 This enables client-side webapps to see common assets and scripts in the `./_lib`  virtual folder.
 
-Additionally, you'll probably want to provide a static file service for app-specific javascript, iamges, etc. in app.js like this:
+Additionally, you'll probably want to provide a static file service for app-specific javascript, images, etc. in app.js like this:
 
     app.use(express.static(__dirname + '/public'));
 
