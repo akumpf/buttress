@@ -56,8 +56,7 @@ var server = app.listen(process.env.PORT||80);
 process.on('SIGTERM', function(){
   // do anything you want before the process is killed (shutdown gracefully).
   server.close(); 
-  atb.onShutdown();
-  return process.exit(); 
+  return atb.onShutdown();
 });
 ```
 
@@ -65,14 +64,14 @@ process.on('SIGTERM', function(){
 
 ### atb: the app toolbelt
 
-- **atb.express* is a passthrough to require("express").
-- **atb.underscore* is a passthrough to require("underscore").
-- **atb.getClientIp(req)** gets the IP from a request.
-- **atb.getClientIpBase36(req)** gets the IP as Base36 from a request.
-- **atb.escapeHTML(txt)** escapes characters that would mangle html output (&,<,>).
-- **atb.appDefaultRoutes(app, express)** is a handy shorthand for common express routes such as: cookies, bodyparser, gzip, and 503-on-overload.
-- **atb.enableHighAvailability(http)** is a posix util that drastically helps under load.
-- **atb.onShutdown()** should be called when your app is given the SIGTERM to end gracefully.
+- **atb.express** -> passthrough to require("express").
+- **atb.underscore** -> passthrough to require("underscore").
+- **atb.getClientIp(req)** -> gets the IP from a request.
+- **atb.getClientIpBase36(req)** -> gets the IP as Base36 from a request.
+- **atb.escapeHTML(txt)** -> escapes characters that would mangle html output (&,<,>).
+- **atb.appDefaultRoutes(app)** -> a handy shorthand for common express routes such as: cookies, bodyparser, gzip, and 503-on-overload.
+- **atb.enableHighAvailability(http)** -> a posix util that drastically helps under load.
+- **atb.onShutdown()** -> should be called when your app is given the SIGTERM to end gracefully.
 
 ### lessr: auto-updating less compiler
 

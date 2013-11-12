@@ -11,6 +11,9 @@ var atb    = exports;
 exports.express     = require("express");
 exports.underscore  = require("underscore");
 // --
+var express = exports.express;
+var _       = exports.underscore;
+// --
 exports.getClientIp       = function(req){
   var ipAddress;
   var forwardedIpsStr = req.header('x-forwarded-for'); 
@@ -56,7 +59,7 @@ exports.enableHighAvailability = function(http){
 };
 // --
 var toobusy = null;
-exports.appDefaultRoutes = function(app, express){
+exports.appDefaultRoutes = function(app){
   // middleware which blocks requests when we're too busy
   toobusy = toobusy||require('toobusy');
   app.use(function(req, res, next) {
@@ -68,8 +71,10 @@ exports.appDefaultRoutes = function(app, express){
   app.use(express.bodyParser({keepExtensions: true}));
   app.use(express.cookieParser());
 };
+// --
 exports.onShutdown = function(){
   if(toobusy) toobusy.shutdown();
+  return process.exit();
 };
 // --
 return exports;
