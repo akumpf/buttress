@@ -5,6 +5,30 @@ Buttress for Node.js
 
 Supportive rapid prototyping library for NodeJS that provides both server and client helpers.
 
+## Installation
+
+    $ npm install buttress
+
+## Example Usage
+
+This README assumes your project's assets are set up with the following folder structure:
+
+```
+|- app.js (main server-side node app)
+|- protected (files that get compiled or compressed)
+|   |- js
+|   |- style
+|- public (public static files server from here)
+    |- js
+    |   |- main.js 
+    |- style
+    |   |- index.css (direct, or generated from less)
+    |- img
+        |- favicon.png
+```
+
+On the server, `app.js` will look something like this:
+
 ```js
 // Get the party started...
 var buttress  = require('buttress');
@@ -25,25 +49,30 @@ app.get('/', function(req, res){
 
 // -- FINALIZE AND START LISTENING -- 
 app.use("/_lib", express.static(buttress.clientLibDir));
+app.use(express.static(__dirname + '/public'));
+// --
 var server = app.listen(process.env.PORT||80);
 // -- WHEN APP ENDS / CLOSES --
 process.on('SIGTERM', function(){
-  // do anything you want before the process is killed.
-  // i.e. shutdown gracefully if possible.
+  // do anything you want before the process is killed (shutdown gracefully).
   server.close(); 
   atb.onShutdown();
   return process.exit(); 
 });
 ```
 
-## Installation
-
-    $ npm install buttress
-
-
 ## SERVER-SIDE 
 
 ### atb: the app toolbelt
+
+- **atb.express* is a passthrough to require("express").
+- **atb.underscore* is a passthrough to require("underscore").
+- **atb.getClientIp(req)** gets the IP from a request.
+- **atb.getClientIpBase36(req)** gets the IP as Base36 from a request.
+- **atb.escapeHTML(txt)** escapes characters that would mangle html output (&,<,>).
+- **atb.appDefaultRoutes(app, express)** is a handy shorthand for common express routes such as: cookies, bodyparser, gzip, and 503-on-overload.
+- **atb.enableHighAvailability(http)** is a posix util that drastically helps under load.
+- **atb.onShutdown()** should be called when your app is given the SIGTERM to end gracefully.
 
 ### lessr: auto-updating less compiler
 
@@ -73,20 +102,7 @@ Note that client-side libraries are split into 3 parts:
 2. **jsmods**: requirejs modules.
 3. **jsworkers**: stand-alone webworkers for heavy tasks.
 
-Buttress is designed to make the client-side html simple and scalable. Here's a template for a site's `index.html` as a starting point. It assumes your assets are structured as follows:
-
-```
-|- app.js (main server-side node app)
-|- public (public static file directory)
-    |- js
-    |   |- main.js 
-    |- style
-    |   |- index.css
-    |- img
-        |- favicon.png
-```
-
-And the HTML (with lots of common things you'll probably want, like app description, etc.).
+Buttress is designed to make the client-side html simple and scalable. Here's a template for a site's `index.html` as a starting point (with lots of common things you'll probably want, like app description, etc).
 
 ```html
 <!DOCTYPE html> 
@@ -139,11 +155,11 @@ function(linkify){
   // make things accessible to the outside world 
   // by adding them to 'exports'
   
-  exports.doSomething = function(txtToMakeLinks){
-    return linkify(txtToMakeLinks);
+  exports.exampleLinkifyTxt = function(txtToLinkify){
+    return linkify(txtToLinkify);
   };
   
-  // --
+  // -- 
   function _onReady(){
     console.log("App is ready!");
   }
