@@ -9,6 +9,14 @@ Supportive rapid prototyping library for NodeJS that provides both server and cl
 
     $ npm install buttress
 
+## Before you get started with buttress
+
+This little library is packed with goodness. But, that also means there's a lot of snippets floating around for you to use, and that may be overwhelming. 
+
+All the code is meant to make your life easier in the long-run. It's not just a 5 line demo, but a real node.js application support structure with the details explicitly laid out. 
+
+You are free to use whatever bits a pieces of buttress that you want. You don't need to structure your code like the examples, but your life will probably be easier if you do. 
+
 ## Example Usage
 
 This README assumes your project's assets are set up with the following folder structure:
