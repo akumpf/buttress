@@ -157,6 +157,7 @@ Buttress is designed to make the client-side html simple and scalable. Here's a 
     <!-- title -->
     <title>APP_TITLE_HERE</title>
     <meta property="og:site_name" content="APP_TITLE_HERE" />
+    <meta name="apple-mobile-web-app-title" content="APP_TITLE_HERE" />
     <!-- desc -->
     <meta name="description"  content="APP_DESCRIPTION_HERE" id='pageDescription'>
     <meta property="og:title" content="APP_DESCRIPTION_HERE" id='ogTitle' />
@@ -257,6 +258,7 @@ All other open source code is licensed as indicated and included simply out of c
 * linkify: http://benalman.com/code/test/js-linkify/
 * markdown: https://github.com/evilstreak/markdown-js
 * addTouch: http://www.jquery4u.com/plugins/10-jquery-ipad-code-snippets-plugins
+* add2Home: http://cubiq.org/add-to-home-screen
 
 Special thanks to **The Chaos Collective (http://chaoscollective.org)** where a lot of this work started.
 
