@@ -97,6 +97,12 @@ process.on('SIGTERM', function(){
 
 ### atb: the app toolbelt
 
+On the server-side, use the app toolbelt like so:
+
+    var atb = buttress.atb()({});
+
+Here's what's inside `atb`:
+
 - **atb.express** -> passthrough to require("express").
 - **atb.underscore** -> passthrough to require("underscore").
 - **atb.getClientIp(req)** -> gets the IP from a request.
