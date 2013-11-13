@@ -124,6 +124,8 @@
   }
 }());
 // --
+window.APP_REV    = window.APP_REV||"0.000";
+// --
 window.isMobile   = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|mobile)/); 
 window.isInIFrame = (window.location != window.parent.location) ? true : false;
 window.myRand     = window.myRand ||Math.random().toString(32).substring(2);
@@ -177,6 +179,9 @@ window.logErrCB       = function(err,cb){
   if(!cb) return console.warn("no callback in logErrCB. You should change that.");
   cb(err);
 };
+window.criticalError  = function(reason){
+  $(".on_criterr").show().find(".details").text("rev."+window.APP_REV+" / "+reason);
+};
 window.appReady       = function(){
   $(".showif_notready").hide();
   $(".showif_ready").show();
@@ -210,7 +215,7 @@ $.fn.dontScrollParent = function(exceptions){
 };
 // --
 
-// jQuery addTouch 
+// jQuery addTouch
 // modified from: http://www.jquery4u.com/plugins/10-jquery-ipad-code-snippets-plugins/
 $.fn.addTouch = function(lockToOrig){
   this.each(function(i,el){
