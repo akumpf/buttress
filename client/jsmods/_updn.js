@@ -13,6 +13,9 @@
 //         But that means events are not be normalized by jQuery. Use
 //         the $.eventToElEX(event, element) function in your callback 
 //         to get the X,Y (and percent X,Y) when needed.
+// Note 4: Events fallback gracefully to 'onmousedown="something();"'
+//         so if you must hardcode actions in HTML, use 'onmousedown', 
+//         not 'onclick' :)
 //
 // questions? akumpf@gmail.com
 // created for Fiddlewax: https://fiddlewax.com
@@ -60,6 +63,10 @@
       dnPrevTarget[e.id] = t; // save the previous target for this dn event.
       // --
       if(t.onDn) t.onDn(e,t);
+      // --
+      // HACK: for legacy things that have a mousedown/click handler, trigger them via touchstart.
+      if(t.onmousedown){t.onmousedown(e);}else{if(t.mousedown)t.mousedown(e);}
+      if(t.click){t.click(e);}else{if(t.onclick)t.onclick(e);}
     }
   } 
   function onTouchDrag(es){

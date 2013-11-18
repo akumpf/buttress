@@ -214,7 +214,7 @@ $.fn.dontScrollParent = function(exceptions){
   });
 };
 // --
- 
+
 // Screenfull (MIT License)
 // https://github.com/sindresorhus/screenfull.js
 (function (window, document) {
