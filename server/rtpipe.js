@@ -115,7 +115,7 @@ module.exports = function(options){
     if(cb) cb(new Date().getTime());
   };
   serverFn.__cb                 = function(err, conn, args, cb, cbID){
-    var _cb = cbs[cbID];
+    var _cb = cbs[cbID][0];
     if(_cb){
       _cb(err, conn, args, cb);
       delete cbs[cbID];
@@ -124,6 +124,22 @@ module.exports = function(options){
   // --
   var connections = {};
   var nullFn = function(){};
+  // --
+  // clean up unused callbacks.
+  var MAX_CB_TIMEOUT_MS = 30*1000;
+  setInterval(function(){
+    var now = new Date().getTime();
+    var rmCount = 0;
+    _.each(cbs, function(cbinfo, cbid){
+      if((now - cbinfo[1]) > MAX_CB_TIMEOUT_MS){
+        delete cbs[cbid];
+        rmCount++;
+      }
+    });
+    if(rmCount > 0){
+      console.log("rtpipe: cleaning up callbacks: "+rmCount+" abandoned, "+_.size(cbs)+" active");
+    }
+  }, MAX_CB_TIMEOUT_MS);
   // --
   var rtpipeServer = sockjs.createServer({log: function(type, msg){
     if(type === 'error') console.log("rtp error", msg); 
@@ -136,7 +152,7 @@ module.exports = function(options){
       var nextcbID = 0;
       if(cb){
         nextcbID      = nextCBID++;
-        cbs[nextcbID] = cb;
+        cbs[nextcbID] = [cb, new Date().getTime()];
       }
       var msgObj = {fnName: fnName, args: args, nextCallbackID: nextcbID};
       try{
@@ -170,7 +186,7 @@ module.exports = function(options){
           var nextcbID = 0;
           if(cb2){
             nextcbID      = nextCBID++;
-            cbs[nextcbID] = cb2;
+            cbs[nextcbID] = [cb2, new Date().getTime()];
           }
           var msgObj = {
             fnName: "__cb", 

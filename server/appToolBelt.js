@@ -72,6 +72,48 @@ exports.appDefaultRoutes = function(app){
   app.use(express.cookieParser());
 };
 // --
+exports.bytesToMB = function(num){
+  num = (num||0)/(1024*1024.0);
+  return num.toFixed(1)+"MB";
+};
+exports.useMemWatch = function(showStats, periodicHeapReport){
+  var memwatch = require("memwatch");
+  memwatch.on('leak', function(info){
+    log9("memwatch: leak -> ");
+    console.log(info);
+  });
+  if(showStats){
+    memwatch.on('stats', function(stats){
+      log5("memwatch: stats -> base = "+atb.bytesToMB(stats.current_base)+", usage_trend = "+stats.usage_trend+", inc_gc = "+stats.num_inc_gc+", full_gc = "+stats.num_full_gc); 
+    });
+  }
+  // -- Periodic heap analysis if trying to find a problem. --
+  if(periodicHeapReport){
+    var hd;
+    var HEAP_TO_KEEP = 1;
+    setTimeout(function(){
+      hd = new memwatch.HeapDiff();
+    }, 5000);
+    setInterval(function(){
+      var diff = hd.end();
+      log8("memwatch: diff -> before/after = "+diff.before.size+"/"+diff.after.size);
+      var change = diff.change.details;
+      change = change.sort(function(a,b){
+        if(a["+"] > b["+"]) return -1;
+        if(a["+"] < b["+"]) return  1;
+        return 0;
+      });
+      
+      if(change.length > HEAP_TO_KEEP) change = change.slice(0,HEAP_TO_KEEP);
+      for(var i=0; i<change.length; i++){
+        log8("[+"+change[i]["+"]+" / -"+change[i]["-"]+"] -> "+change[i].what+" -> size: "+change[i].size);
+      }
+      // --
+      hd = new memwatch.HeapDiff();
+    }, 180000);
+  }
+};
+// --
 exports.onShutdown = function(){
   if(toobusy) toobusy.shutdown();
   return process.exit();

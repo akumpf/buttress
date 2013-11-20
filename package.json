@@ -22,8 +22,9 @@
     "sockjs": "0.3.8",
     "posix": "*",
     "less": "*",
-    "toobusy": "*"
-  },
+    "toobusy": "*",
+    "memwatch": "*"
+  }, 
   "engine": "node >= 0.10.0",
   "main": "index",
   "repository": "git://github.com/akumpf/buttress.git"
