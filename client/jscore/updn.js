@@ -10,12 +10,14 @@
 // Note 2: use 'pointer-events: none;' in css for child elements you 
 //         don't want to be touchable (keeps things super fast). 
 // Note 3: This bypasses jQuery for low-level events -- it's speedy! 
-//         But that means events are not be normalized by jQuery. Use
-//         the $.eventToElEX(event, element) function in your callback 
+//         But that means events are NOT normalized by jQuery. Use
+//         the $.eventToElXY(event, element) function in your callback 
 //         to get the X,Y (and percent X,Y) when needed.
 // Note 4: Events fallback gracefully to 'onmousedown="something();"'
 //         so if you must hardcode actions in HTML, use 'onmousedown', 
 //         not 'onclick' :)
+// Note 5: All events are given an id as e.id. Use this id to keep track
+//         of which interaction point is where (i.e., multitouch).
 //
 // questions? akumpf@gmail.com
 // created for Fiddlewax: https://fiddlewax.com
@@ -23,7 +25,7 @@
 //
 // OVERVIEW: 
 //
-// onDn             (down on element)
+// onDn             (down on element; touch or mouse, it doesn't matter!)
 // onDnMoveAny      (down on element and moving/dragging anywhere on the screen)
 // onDnMoveOver     (donw on element and moving/dragging still over element)
 // onDnUpAny        (down on element and up anywhere on the screen)
