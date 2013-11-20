@@ -90,7 +90,7 @@ exports.useMemWatch = function(showStats, periodicHeapReport){
   // -- Periodic heap analysis if trying to find a problem. --
   if(periodicHeapReport){
     var hd;
-    var HEAP_TO_KEEP = 1;
+    var HEAP_TO_KEEP = 3;
     setTimeout(function(){
       hd = new memwatch.HeapDiff();
     }, 5000);
@@ -99,11 +99,11 @@ exports.useMemWatch = function(showStats, periodicHeapReport){
       log8("memwatch: diff -> before/after = "+diff.before.size+"/"+diff.after.size);
       var change = diff.change.details;
       change = change.sort(function(a,b){
-        if(a["+"] > b["+"]) return -1;
-        if(a["+"] < b["+"]) return  1;
+        if(a.size_bytes > b.size_bytes) return -1;
+        if(a.size_bytes < b.size_bytes) return  1;
         return 0;
       });
-      
+       
       if(change.length > HEAP_TO_KEEP) change = change.slice(0,HEAP_TO_KEEP);
       for(var i=0; i<change.length; i++){
         log8("[+"+change[i]["+"]+" / -"+change[i]["-"]+"] -> "+change[i].what+" -> size: "+change[i].size);
