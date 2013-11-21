@@ -6,9 +6,11 @@ module.exports = {
   log:          function(){return require("./server/log.js");},
   reqjs:        function(){return require("./server/reqjs.js");},
   rtpipe:       function(){return require("./server/rtpipe.js");},
+  scrunch:      function(){return require("./server/scrunch.js");},
   sessionStore: function(){return require("./server/sessionStore.js");},
   // --
-  clientLibDir: __dirname+"/client"
+  clientLibDir: __dirname+"/client",
+  serverLibDir: __dirname+"/server"
 };
 
 

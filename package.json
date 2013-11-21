@@ -23,7 +23,8 @@
     "posix": "*",
     "less": "*",
     "toobusy": "*",
-    "memwatch": "*"
+    "memwatch": "*",
+    "uglify-js": "*"
   }, 
   "engine": "node >= 0.10.0",
   "main": "index",

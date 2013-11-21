@@ -59,9 +59,12 @@ exports.enableHighAvailability = function(http){
 };
 // --
 var toobusy = null;
-exports.appDefaultRoutes = function(app){
+exports.appDefaultRoutes = function(app,maxLag){
   // middleware which blocks requests when we're too busy
+  maxLag = maxLag||70;
+  if(maxLag !== 70) console.log("toobusy: setting maxLag to "+maxLag+"ms"); 
   toobusy = toobusy||require('toobusy');
+  toobusy.maxLag(maxLag);
   app.use(function(req, res, next) {
     if (toobusy()) return res.send(503, "I'm busy right now, sorry. Try back in a bit.");
     next();

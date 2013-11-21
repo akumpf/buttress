@@ -116,7 +116,7 @@ Here's what's inside `atb`:
 - **atb.getClientIpBase36(req)** -> gets the IP as Base36 from a request.
 - **atb.escapeHTML(txt)** -> escapes characters that would mangle html output (&,<,>).
 - **atb.bytesToMB(num)** -> converts a number of bytes to a string representing MB.
-- **atb.appDefaultRoutes(app)** -> a handy shorthand for common express routes such as: cookies, bodyparser, gzip, and 503-on-overload.
+- **atb.appDefaultRoutes(app,maxLag)** -> a handy shorthand for common express routes such as: cookies, bodyparser, gzip, and 503-on-overload.
 - **atb.enableHighAvailability(http)** -> a posix util that drastically helps under load.
 - **atb.useMemWatch(showStats,showHeap)** -> log memory usage and alert when something seems leaky.
 - **atb.onShutdown()** -> should be called when your app is given the SIGTERM to end gracefully.
