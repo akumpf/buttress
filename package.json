@@ -24,7 +24,9 @@
     "less": "*",
     "toobusy": "*",
     "memwatch": "*",
-    "uglify-js": "*"
+    "uglify-js": "*",
+    "nodemailer": "*",
+    "request": "*"
   }, 
   "engine": "node >= 0.10.0",
   "main": "index",

@@ -53,7 +53,13 @@
   var dnPrevTarget = {};
   // -- TOUCH --
   function onTouchStart(es){
-    es.preventDefault();
+    if(!es.target||es.target.tagName!=="INPUT"){
+      if(es.preventDefault) es.preventDefault();
+      document.activeElement.blur();
+    }else{
+      if(es.target) es.target.focus();
+    }
+    // --
     var touches = es.changedTouches||es.touches||[];
     for(var i=0; i<touches.length; i++){
       var e = touches[i];
@@ -71,19 +77,30 @@
       if(t.click){t.click(e);}else{if(t.onclick)t.onclick(e);}
     }
   } 
-  function onTouchDrag(es){
-    es.preventDefault();
+  function onTouchDrag(es){ 
+    // Always prevent touch drag, or user can drag HTML body in browser. :(
+    if(es.preventDefault) es.preventDefault();
+    // --
     var touches = es.changedTouches||es.touches||[];
     for(var i=0; i<touches.length; i++) onEventDrag(touches[i], true);
   }
   function onTouchEndDrag(es){
-    es.preventDefault();
+    if(!es.target||es.target.tagName!=="INPUT"){
+      if(es.preventDefault) es.preventDefault();
+    }
+    // --
     var touches = es.changedTouches||es.touches||[];
     for(var i=0; i<touches.length; i++) onEventEndDrag(touches[i], true);
   }
-  // -- MOUSE --
+  // -- MOUSE -- 
   function onMouseDown(e){
-    e.preventDefault();
+    if(!e.target||e.target.tagName!=="INPUT"){
+      if(e.preventDefault) e.preventDefault();
+      document.activeElement.blur();
+    }else{
+      if(e.target) e.target.focus();
+    }
+    // --
     e.id  = e.id||e.identifier;
     if(e.id === undefined) e.id = -1;
     var t = document.elementFromPoint(e.clientX, e.clientY);
@@ -95,7 +112,10 @@
   }
   // -- MOUSE/TOUCH EVENT PROCESSORS --
   function onEventDrag(e){
-    if(e.preventDefault) e.preventDefault();
+    if(!e.target||e.target.tagName!=="INPUT"){
+      if(e.preventDefault) e.preventDefault();
+    } 
+    // --
     e.id  = e.id||e.identifier;
     if(e.id === undefined) e.id = -1;
     var t1 = dnOrigTarget[e.id];
@@ -116,7 +136,9 @@
     if(t3 && t3.onDragOver) t3.onDragOver(e,t3);
   }
   function onEventEndDrag(e){
-    if(e.preventDefault) e.preventDefault();
+    if(!e.target||e.target.tagName!=="INPUT"){
+      if(e.preventDefault) e.preventDefault();
+    }
     // --
     e.id  = e.id||e.identifier;
     if(e.id === undefined) e.id = -1;

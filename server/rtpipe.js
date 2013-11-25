@@ -52,13 +52,10 @@ module.exports = function(options){
       req.session.sync_ip = _getClientIp(req); 
       res.setHeader('Content-Type', 'text/plain');
       //console.log("getSessionToken: sessionID", req.sessionID);
-      if(!req.sessionID){
-        return res.end("0");
-      }else{
-        rtp.getSessionToken(req, function(token){
-          res.end(token||"0");
-        });
-      }
+      if(!req.sessionID) return res.end("0");
+      rtp.getSessionToken(req, function(token){
+        res.end(token||"0");
+      });
     });
   }
   // --
@@ -141,9 +138,11 @@ module.exports = function(options){
     }
   }, MAX_CB_TIMEOUT_MS);
   // --
-  var rtpipeServer = sockjs.createServer({log: function(type, msg){
+  var rtpipeServer = sockjs.createServer({
+    log: function(type, msg){
     if(type === 'error') console.log("rtp error", msg); 
-  }}); 
+    }
+  }); 
   rtpipeServer.on('connection', function(conn) {
     // new connection.
     conn.id = conn.id.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
@@ -233,7 +232,7 @@ module.exports = function(options){
     if(!req.sessionID) return cb("0"); // no session ID found.
     _getNewRandomToken(function(token){
       var t = (new Date()).getTime();
-      sessionStore.set(token, {sid: req.sessionID, time: t, type: "rtpipetoken", cookie: {_expires: t+(30*1000)}},  function(err) { 
+      sessionStore.set(token, {sid: req.sessionID, time: t, type: "rtpipetoken", cookie: {expires: t+(30*1000)}},  function(err) { 
         if (err){
           console.log(err);
           return cb("0");

@@ -42,7 +42,7 @@ window.rtpipe = (function(){
         if(options.syncSession){ 
           $.get("/rt/getSessionToken", {r: Math.random()}, function(data, ok, getObj){
             if(data && data !== "0"){
-              if(XMLDocument && data instanceof XMLDocument){  
+              if(window.XMLDocument && data instanceof window.XMLDocument){  
                 console.log("warning.. seeing response as XMLDocument.");
                 if(getObj) data = getObj.responseText;
               }

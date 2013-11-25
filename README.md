@@ -56,8 +56,8 @@ var app       = express();
 var http      = require("http");
 var httpapp   = http.createServer(app);
 // --
-atb.enableHighAvailability(http);   // drastically helps under load.
-atb.appDefaultRoutes(app, express); // cookies,bodyparser,gzip,503-on-overload.
+atb.enableHighAvailability(http); // drastically helps under load.
+atb.appDefaultRoutes(app, 200);   // cookies,bodyparser,gzip,503-on-overload.
 // --
 // -- BEGIN MAIN APP CODE --
 

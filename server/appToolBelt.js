@@ -5,6 +5,8 @@ var myname      = "atb: ";
 var logHelp     = require("./log.js");
 // --
 module.exports = function(settings){
+settings = settings||{};
+// --
 var exports = {};
 var atb    = exports;
 // --
@@ -59,20 +61,32 @@ exports.enableHighAvailability = function(http){
 };
 // --
 var toobusy = null;
+var sent503 = false;
 exports.appDefaultRoutes = function(app,maxLag){
   // middleware which blocks requests when we're too busy
-  maxLag = maxLag||70;
-  if(maxLag !== 70) console.log("toobusy: setting maxLag to "+maxLag+"ms"); 
-  toobusy = toobusy||require('toobusy');
-  toobusy.maxLag(maxLag);
-  app.use(function(req, res, next) {
-    if (toobusy()) return res.send(503, "I'm busy right now, sorry. Try back in a bit.");
-    next();
-  });
+  if(maxLag){
+    console.log("toobusy: setting maxLag to "+maxLag+"ms"); 
+    app.use(atb.appTooBusyRoute(maxLag));
+  }
   // --
   app.use(express.compress()); // gzip (make things small before sending)
   app.use(express.bodyParser({keepExtensions: true}));
-  app.use(express.cookieParser());
+  app.use(express.cookieParser(settings.session_secret||null)); 
+};
+// --
+exports.appTooBusyRoute = function(maxLag){
+  maxLag = maxLag||70;
+  if(maxLag !== 70) console.log("toobusy: setting maxLag to "+maxLag+"ms"); 
+  toobusy = toobusy||require('toobusy');
+  toobusy.maxLag(maxLag);  
+  return function(req, res, next){
+    if (toobusy()){
+      if(!sent503) log8("*** SENT FIRST 503 *** Unusually high load?! Make this better!");
+      sent503 = true; 
+      return res.send(503, "<html><head></head><body style='font-family:Arial,sans-serif;font-size:22px;color:#CCC;background:#222;padding:40px;'>Howdy, friend.<br/><br/><span style='color:#FC0;font-weight:600;'>We're experiencing an unusually high <br/>amount of users right now.</span><br/><br/>Sorry about that.<br/>Try back in a bit when things calm down.<br/><br/><span style='font-size: 14px;'>P.S. We have been notified of the issue, and we're working on it!</span></body></html>");
+    }
+    next();
+  };
 };
 // --
 exports.bytesToMB = function(num){
