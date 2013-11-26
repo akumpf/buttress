@@ -47,7 +47,7 @@ module.exports = function(settings, app, express){
     cookie: { 
       path     : '/',  // root path for the cookie
       httpOnly : true, // this includes https (just not browser code)
-      maxAge   : 1000*60*60*24*30, // 30 days between accesses
+      maxAge   : 1000*60*60*24*15, // 15 days between accesses
     } 
   };
   // --

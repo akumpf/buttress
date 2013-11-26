@@ -19,13 +19,14 @@ var defaultOptions = {
   app_url_base:         "http://...",
   app_url_postlogin:    "http://...",
   app_url_postlogout:   "http://...",
+  app_url_terms:        "http://...",
   email_service:        "Gmail",
   email_from:           "asdf@gmail.com",
   email_from_name:      "EmailAuth Helpdesk",
   email_user:           "asdf@gmail.com",
   email_pass:           "passwordz",
   email_login_subject:  "EmailAuth: Login Key for ${APP_NAME} -- @${DATE_B36_M4}",  
-  email_login_bodyHTML: "Hello from <b>${APP_NAME}</b>.<h3>Here is your requested access key.</h3><br/><h2><a style='text-decoration: none; font-weight: 600;' href='${CONFIRM_URL}' target='${LINK_TARGET}'>Click to Sign In to ${APP_NAME}</a></h2><br/>This is a single-use link and must be verified within ${TOKEN_TIME} to validate. Do not forward or share this email with anyone else.<br/><br/>&mdash; see you soon!<br/><br/>The ${APP_NAME} Team<br/><br/><span style='font-size: 11px; color: #777;'>- - - - - - -<br/><br/>If you did not request a login key and are recieving this email in error, please let us know by replying to this message.<br/>For your records, this login request was made from IP: ${FROM_IP}</span>"
+  email_login_bodyHTML: "Hello from <b>${APP_NAME}</b>.<h3>Here is your requested access key.</h3><h2><a style='text-decoration: none; font-weight: 600;' href='${CONFIRM_URL}' target='${LINK_TARGET}'>Click to Sign In to ${APP_NAME}</a></h2><br/>This is a single-use link and must be verified within ${TOKEN_TIME}.<br/>For your own security, do not forward or share this email with anyone else.<br/>By clicking Sign In, you agree to the ${APP_NAME} <a href='${APP_TERMS}' style='text-decoration: none;'>terms and conditions</a><br/><br/>&mdash; see you soon!<br/><br/>The ${APP_NAME} Team<br/><br/><span style='font-size: 11px; color: #777;'>- - - - - - -<br/><br/>If you did not request a sign in key and are recieving this email in error, please <a href='mailto:${FROM_EMAIL}?subject=${APP_NAME} Unauthorized Sign In Report&body=Hello ${APP_NAME} Team,%0D%0A%0D%0AI am writing to report an unauthorized sign in request, from IP: ${FROM_IP}, to my email: ${TO_EMAIL}.%0D%0A%0D%0A- - - -%0D%0A%0D%0AInclude additional details below, if any:%0D%0A '>let us know</a>.<br/>For your records, this login request was made from IP: ${FROM_IP}</span>" 
 }; 
 // --
 // Alternatively, you can specify email provider directly via host/ssh/port params and they'll override the service.
@@ -86,6 +87,9 @@ exports.init = function(options){
     bodyHTML = bodyHTML.replace(/\$\{TOKEN_TIME\}/g, tokenMin);
     bodyHTML = bodyHTML.replace(/\$\{LINK_TARGET\}/g, linkTarget);
     bodyHTML = bodyHTML.replace(/\$\{FROM_IP\}/g, fromIP);
+    bodyHTML = bodyHTML.replace(/\$\{FROM_EMAIL\}/g, options.email_from);
+    bodyHTML = bodyHTML.replace(/\$\{TO_EMAIL\}/g, useremail);
+    bodyHTML = bodyHTML.replace(/\$\{APP_TERMS\}/g, options.app_url_terms);
     // --
     var mailOptions = {
       from:    options.email_from_name+" <"+options.email_from+">",
@@ -155,34 +159,36 @@ exports.init = function(options){
       }
     });
   }
-  // --
+  // -- 
   app.get("/act/emailauth_login", function(req, res){
     if(!req.session) return res.end("ERROR: No session object.");
     if(req.session.auth && req.session.auth.loggedin){
       //console.log(req.session.auth);
       return res.redirect(options.app_url_postlogin);
-    } 
+    }
     var recaptchaHTML = "<br/><br/>";
     var onclick = "";
     if(options.recaptchaPrivKey){
-      recaptchaHTML = "<br/><br/>Are you a robot?<br/>"+
+      recaptchaHTML = "<br/><br/><span id='robottxt'>Prove you're not a robot:</span><br/><br/>"+
         "<script type='text/javascript'>var RecaptchaOptions = {theme : 'white'};</script>"+
         "<script type='text/javascript' src='https://www.google.com/recaptcha/api/challenge?k="+options.recaptchaPubKey+"'></script>"+
         "<br/>";
-      onclick="_gaq.push(['_trackEvent', 'Users', 'Login']);";
+      onclick="if(window._gaq) _gaq.push(['_trackEvent', 'Users', 'Login']);";
     }
-    res.end("<html><head><title>Sign In</title></head><body style='padding: 25px; font-family: Arial; background: #EEE; color: #333;'><form method='post' action='/act/emailauth_login' onsubmit='if(window.formWasSubmitted) return false; window.formWasSubmitted = true; return true;'>Sign In to "+options.app_name+" with your email address:<br/><input style='width: 318px; padding: 5px; font-size: 14px; margin-top: 10px;' type='email' name='email' placeholder='yourname@email.com' />"+
+    res.end("<html lang='en-US' dir='ltr'><head><title>Sign In to "+options.app_name+"</title></head><body style='padding: 15px; font-family: Arial; background: #EEE; color: #333; padding-top: 10px; line-height: 14px;'><form method='post' action='/act/emailauth_login' onsubmit='if(window.formWasSubmitted) return false; window.formWasSubmitted = true; return true;'>Enter your email address:<br/><input style='width: 318px; padding: 5px; font-size: 14px; margin-top: 15px;' type='email' name='email' placeholder='yourname@email.com' />"+
     recaptchaHTML+
-    "<input type='submit' style='border: none; border-radius: 0; background: #333; color: #FFF; line-height: 34px; cursor: pointer; position: relative; font-size: 16px; width: 318px;' value='Sign In' onclick=\""+onclick+"\" /></form><div style='font-size: 12px; position: relative; width: 270px;'>Don't have an account yet?<br/>No worries, just sign in above and we'll help you get started.</div><br/><div style='font-size: 11px; color: #777; position: relative; width: 320px;'>Note: Enter your own email address only. Your IP address and connection information will be logged for security purposes.</div></body></html>");
-  }); 
+    "<input type='submit' style='border: none; border-radius: 0; background: #333; color: #FFF; line-height: 34px; cursor: pointer; position: relative; font-size: 16px; width: 318px;' value='Sign In' onclick=\""+onclick+"\" /></form><div style='font-size: 12px; position: relative; width: 270px;'>Don't have an account yet? No worries.<br/>Just sign in above and we'll help you get started.</div><br/><div style='font-size: 11px; color: #777; position: relative; width: 320px;'>Note: Enter your own email address only. Your IP address and connection information will be logged for security purposes. By signing in, you agree to the <a href='"+options.app_url_terms+"' target='_blank' style='text-decoration: none; color: #000; font-weight: 600;'>terms and conditions</a>.</div><script>if(window.location.hash.length > 1){ var rtxt = document.getElementById('robottxt'); rtxt.style.color = '#C00'; rtxt.innerHTML = window.location.hash.substring(1);}</script></body></html>");
+  });
   app.post("/act/emailauth_login", function(req, res){
+    if(!req.session) return res.end("ERROR: No session object.");
     if(!req || !req.body || !req.body.email) return res.end("ERROR: No Email.");
     var useremail = req.body.email;
     var linkTarget = req.body.tgt || "_blank";
-    if(!req.sessionID) return res.end("ERROR: No Session.");
     useremail = _prepareEmail(useremail);
     var ip = _getClientIp(req);
-    if(_emailIsNotValid(useremail)) return res.end("ERROR: Invalid Email.");
+    if(_emailIsNotValid(useremail)){
+      return res.redirect("/act/emailauth_login#Invalid email. Please try again.");
+    }
     function doLogin(){
       getAuthToken(req, useremail, ip, function(token){
       if(!token) return res.end("ERROR: No Token.");
@@ -190,11 +196,11 @@ exports.init = function(options){
       sendAuthEmail(useremail, token, linkTarget, ip, function(err){
         if(err){
           console.log("failed to send email to: "+useremail);
-          return res.end("ERROR: Email Failed To Send; Retry Later.");
+          return res.redirect("/act/emailauth_login#Email Failed To Send. Retry Later.");
         }
-        res.end("<html><head><title>Email Sent</title></head><body style='padding: 25px; font-family: Arial; background: #EEE; color: #333;'><h2>Email Sent</h2>Please check your inbox and click the <b>Sign In</b> link.<br/><br/>See you soon!</body></html>");
+        res.end("<html><head><title>Email Sent</title></head><body style='padding: 25px; font-family: Arial; background: #EEE; color: #333;'><h2>Email Sent</h2>Please check your inbox and click the <b>Sign In</b> link.<br/><br/>After that, you'll be fully signed in and confirmed. No additional password needed.<br/><br/>See you soon!</body></html>");
         if(options.onloginattempt){
-          options.onloginattempt(useremail, null, ip);
+          options.onloginattempt(useremail, ip);
         }
       });
     });
@@ -223,7 +229,7 @@ exports.init = function(options){
         }else{
           // fail.
           console.log("eauth: failed recaptcha ->", bs);
-          return res.redirect("/");
+          return res.redirect("/act/emailauth_login#Incorrect text. Please try again.");
         }
       });
     }else{
@@ -231,6 +237,7 @@ exports.init = function(options){
     }
   });
   app.get("/act/emailauth_confirm", function(req, res){
+    if(!req.session) return res.end("ERROR: No session object.");
     if(!req || !req.query || !req.query.token) return res.end("0");
     var token = req.query.token;
     var ip = _getClientIp(req);
@@ -239,26 +246,28 @@ exports.init = function(options){
       //console.log(data);
       var t = new Date().getTime();
       if(!data){
-        return res.end("<html><head><title>Confirm</title></head><body style='padding: 25px; font-family: Arial; background: #EEE; color: #333;'><h2>Whoops!</h2><br/><b>Your temporary login token was not found.</b><br/><br/><br/>Did you submit your email address too long ago?<br/>Perhaps you should <a href='"+options.app_url_base+"/act/emailauth_login'>login again</a>.</body></html>");
+        if(req.session && req.session.auth && req.session.auth.loggedin){
+          //console.log("eauth: user reconfirmed old token, but was already logged in. just redirect.");
+          return res.redirect(options.app_url_postlogin);
+        }
+        return res.end("<html><head><title>Confirm</title></head><body style='padding: 25px; font-family: Arial; background: #EEE; color: #333;'><h2>Whoops!</h2><br/><b>Your temporary sign in key was not found.</b><br/><br/><br/>Did you submit your email address too long ago?<br/>Perhaps you should <a href='"+options.app_url_base+"/act/emailauth_login'>sign in again</a>.</body></html>");
       }
       if(data.type !== "eauthtoken" || !data.email || !data.ip || !data.cookie || !data.cookie.expires || data.cookie.expires < t){
         return res.end("ERROR: Expired.");
       }
-      var emailmd5 = crypto.createHash('md5').update(data.email).digest('hex');
-      var usericon = "http://www.gravatar.com/avatar/"+emailmd5+".png?s=50&d=mm";
-      var userinfo = "www.gravatar.com/"+emailmd5+".json";
+      //var emailmd5 = crypto.createHash('md5').update(data.email).digest('hex');
+      //var usericon = "http://www.gravatar.com/avatar/"+emailmd5+".png?s=50&d=mm";
       // OK! now remove the token and mark the user as logged in with their info.
       sessionStore.destroy(token, function(){
         sessionStore.get(token, function(err, d2){
           if(err || d2){
             console.log(err);
             console.log(d2);
-            return res.end("ERROR: Session not be closed. aborting.");
+            return res.end("ERROR: Session not closed. aborting.");
           }
-          //req.session.auth = {email: data.email, loginip: data.ip, confirmip: ip, loginat: t, emailmd5: emailmd5, usericon: usericon, userinfo: userinfo, loggedin: true};
-          req.session.auth = {email: data.email, loginip: data.ip, confirmip: ip, loginat: t, emailmd5: emailmd5, loggedin: true};
+          req.session.auth = {email: data.email, loginip: data.ip, confirmip: ip, loginat: t, loggedin: true};
           if(options.onconfirm){
-            options.onconfirm(data.email, usericon, ip, req, res, function(){
+            options.onconfirm(data.email, ip, req, res, function(){
               res.redirect(options.app_url_postlogin);
             });
           }else{
@@ -285,7 +294,7 @@ exports.init = function(options){
     req.session.destroy();
     res.redirect(options.app_url_postlogout);
     if(user.email && options.onlogout){ 
-      options.onlogout(user.email, user.usericon, ip);
+      options.onlogout(user.email, ip);
     }
   });
   // --

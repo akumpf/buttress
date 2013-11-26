@@ -48,11 +48,14 @@ module.exports = function(options){
     //console.log("rtp| installing session"); 
     app.get("/rt/getSessionToken", function(req, res){
       //console.log("-- getting session token");
+      res.setHeader('Content-Type', 'text/plain');
+      if(!req.sessionID){
+        console.log("rt| trying to get session token without existing session?");
+        return res.end("0");
+      }
       req.session = req.session || {}; 
       req.session.sync_ip = _getClientIp(req); 
-      res.setHeader('Content-Type', 'text/plain');
       //console.log("getSessionToken: sessionID", req.sessionID);
-      if(!req.sessionID) return res.end("0");
       rtp.getSessionToken(req, function(token){
         res.end(token||"0");
       });
@@ -99,9 +102,9 @@ module.exports = function(options){
         conn.session    = session;
         conn.sessionID  = obj.sid;
         // -- update conn.id
-        delete connections[conn.id];
-        conn.id = (conn.sessionID||conn.id).replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
-        connections[conn.id] = conn;
+        // delete connections[conn.id];
+        // conn.id = (conn.sessionID||conn.id).replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
+        // connections[conn.id] = conn;
         // --
         cb(null);
         rtp.onconnsyncd(conn);
