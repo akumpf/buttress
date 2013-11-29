@@ -52,8 +52,8 @@
   var dnOrigTarget = {};
   var dnPrevTarget = {};
   // -- TOUCH --
-  function onTouchStart(es){
-    if(!es.target||es.target.tagName!=="INPUT"){
+  function onTouchStart(es){ 
+    if(!es.target||(es.target.tagName!=="INPUT"&&es.target.tagName!=="SELECT")){
       if(es.preventDefault) es.preventDefault();
       document.activeElement.blur();
     }else{
@@ -94,7 +94,7 @@
   }
   // -- MOUSE -- 
   function onMouseDown(e){
-    if(!e.target||e.target.tagName!=="INPUT"){
+    if(!e.target||(e.target.tagName!=="INPUT"&&e.target.tagName!=="SELECT")){
       if(e.preventDefault) e.preventDefault();
       document.activeElement.blur();
     }else{

@@ -87,7 +87,7 @@ module.exports = function(options){
       if(err) console.log("sessionStore: ", err); 
       var t = (new Date()).getTime();
       if(!obj || !obj.time || !obj.sid || (t-obj.time > 120*1000)){
-        console.log(obj);
+        console.log("rt| invalid or expired token",obj);
         return cb("ERROR: invalid, expired, or claimed token.");
       }
       sessionStore.destroy(args.token, function(err){ // remove the token.

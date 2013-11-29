@@ -22,6 +22,7 @@ module.exports = function(settings, app, express){
   var SESSION_KEY       = settings.session_key      ||  "sessid"; 
   var SESSION_DOMAIN    = settings.session_domain   ||  false;
   var SESSION_SECURE    = !!settings.session_secure;
+  var SESSION_MAXAGE    = settings.session_maxage   || 1000*60*60*24*15; // 15 days between accesses
   // --
   var REQ_ORIGIN        = settings.req_origin       ||null;
   // --
@@ -47,7 +48,7 @@ module.exports = function(settings, app, express){
     cookie: { 
       path     : '/',  // root path for the cookie
       httpOnly : true, // this includes https (just not browser code)
-      maxAge   : 1000*60*60*24*15, // 15 days between accesses
+      maxAge   : SESSION_MAXAGE
     } 
   };
   // --

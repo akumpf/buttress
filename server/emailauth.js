@@ -14,6 +14,7 @@ var nodemailer  = require("nodemailer");
 var request     = require('request'); 
 // ---
 var defaultOptions = {
+  verbose:              false,
   tokenExpireMS:        1000*60*5, // 5 minutes
   app_name:             "Test App",
   app_url_base:         "http://...",
@@ -166,6 +167,7 @@ exports.init = function(options){
       //console.log(req.session.auth);
       return res.redirect(options.app_url_postlogin);
     }
+    if(options.verbose) console.log("eauth: showing login to "+_getClientIp(req));
     var recaptchaHTML = "<br/><br/>";
     var onclick = "";
     if(options.recaptchaPrivKey){
