@@ -30,6 +30,7 @@
 // onDnMoveOver     (donw on element and moving/dragging still over element)
 // onDnUpAny        (down on element and up anywhere on the screen)
 // onDnUpOver       (down on element and up on same element; users may have left and returned)
+// onDnLeaveOrUp    (down on element and up or leaving element)
 // onDragEnter      (down on anywhere else, but dragged over this element)
 // onDragOver       (down anywhere (this or elsewhere), and dragging/moving over this element)
 // onDragLeaveOrUp  (dragged to this element and is now leaving; or just up/released.)
@@ -51,6 +52,7 @@
 (function(){
   var dnOrigTarget = {};
   var dnPrevTarget = {};
+  var dnHasLeft    = {};
   // -- TOUCH --
   function onTouchStart(es){ 
     if(!es.target||(es.target.tagName!=="INPUT"&&es.target.tagName!=="SELECT")){
@@ -69,6 +71,7 @@
       // --
       dnOrigTarget[e.id] = t; // save the original target for this dn event.
       dnPrevTarget[e.id] = t; // save the previous target for this dn event.
+      dnHasLeft[e.id] = false;
       // --
       if(t.onDn) t.onDn(e,t);
       // --
@@ -107,6 +110,7 @@
     // --
     dnOrigTarget[e.id] = t; // save the original target for this dn event.
     dnPrevTarget[e.id] = t; // save the previous target for this dn event.
+    dnHasLeft[e.id] = false;
     // --
     if(t.onDn) t.onDn(e,t);
   }
@@ -121,6 +125,7 @@
     var t1 = dnOrigTarget[e.id];
     if(!t1) return; // NOT DOWN.
     // --
+    var hasleft = dnHasLeft[e.id]||false;
     var t2 = dnPrevTarget[e.id]||{};
     var t3 = document.elementFromPoint(e.clientX, e.clientY);
     // --
@@ -128,6 +133,10 @@
     // --
     if(t3 === t1 && t1.onDnMoveOver) t1.onDnMoveOver(e,t1);
     if(t1.onDnMoveAny) t1.onDnMoveAny(e,t1);
+    if(t3 !== t1 && !hasleft){
+      dnHasLeft[e.id] = true;
+      if(t1.onDnLeaveOrUp) t1.onDnLeaveOrUp(e,t1);
+    }
     if(t3 && t3 !== t2){
       // we moved to a different element (from t2 to t3).
       if(t2 && t2.onDragLeaveOrUp) t2.onDragLeaveOrUp(e,t2);
@@ -147,12 +156,15 @@
     // --
     var t2 = dnPrevTarget[e.id]||{};
     var t3 = document.elementFromPoint(e.clientX, e.clientY);
+    var hasleft = dnHasLeft[e.id];
     // --
     delete dnOrigTarget[e.id];
     delete dnPrevTarget[e.id];
+    delete dnHasLeft[e.id];
     // --
     if(t3 === t1 && t1.onDnUpOver) t1.onDnUpOver(e,t1);
     if(t1.onDnUpAny) t1.onDnUpAny(e,t1);
+    if(!hasleft && t1.onDnLeaveOrUp) t1.onDnLeaveOrUp(e,t1);
     if(t3 && t3.onDragLeaveOrUp) t3.onDragLeaveOrUp(e,t3);
   }
   // -- START THE EVENT LISTENING PARTY --
@@ -169,6 +181,7 @@ $.fn.onDnMoveAny      = function(fn){this.each(function(i,el){el.onDnMoveAny    
 $.fn.onDnMoveOver     = function(fn){this.each(function(i,el){el.onDnMoveOver     = fn;});return this;};
 $.fn.onDnUpAny        = function(fn){this.each(function(i,el){el.onDnUpAny        = fn;});return this;};
 $.fn.onDnUpOver       = function(fn){this.each(function(i,el){el.onDnUpOver       = fn;});return this;};
+$.fn.onDnLeaveOrUp    = function(fn){this.each(function(i,el){el.onDnLeaveOrUp    = fn;});return this;};
 $.fn.onDragEnter      = function(fn){this.each(function(i,el){el.onDragEnter      = fn;});return this;};
 $.fn.onDragOver       = function(fn){this.each(function(i,el){el.onDragOver       = fn;});return this;};
 $.fn.onDragLeaveOrUp  = function(fn){this.each(function(i,el){el.onDragLeaveOrUp  = fn;});return this;};
