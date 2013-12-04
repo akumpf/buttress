@@ -171,7 +171,7 @@ exports.init = function(options){
     var recaptchaHTML = "<br/><br/>";
     var onclick = "";
     if(options.recaptchaPrivKey){
-      recaptchaHTML = "<br/><br/>"+
+      recaptchaHTML = "<br/><span id='robottxt'></span><br/>"+
         //"<span id='robottxt'>Prove you're not a robot:</span><br/><br/>"+
         "<script type='text/javascript'>var RecaptchaOptions = {theme : 'white'};</script>"+
         "<script type='text/javascript' src='https://www.google.com/recaptcha/api/challenge?k="+options.recaptchaPubKey+"'></script>"+
@@ -179,7 +179,7 @@ exports.init = function(options){
       onclick="if(window._gaq) _gaq.push(['_trackEvent', 'Users', 'Login']);";
     } 
     res.end("<html lang='en-US' dir='ltr'><head><title>Sign In to "+options.app_name+"</title></head><body style='padding: 15px; font-family: Arial; background: #EEE; color: #333; padding-top: 10px; line-height: 14px;'><form method='post' action='/act/emailauth_login' onsubmit='if(window.formWasSubmitted) return false; window.formWasSubmitted = true; return true;'><b>Sign In to "+options.app_name+"</b><br/><input style='width: 318px; padding: 5px; font-size: 14px; margin-top: 15px;' type='email' name='email' placeholder='Email' />"+
-    recaptchaHTML+
+    recaptchaHTML+ 
     "<input type='submit' style='border: none; border-radius: 0; background: #333; color: #FFF; line-height: 34px; cursor: pointer; position: relative; font-size: 16px; width: 318px; height: 34px; -webkit-appearance: none;' value='Sign In' onclick=\""+onclick+"\" /></form><div style='font-size: 12px; position: relative; width: 270px;'>Oh, and we'll never send you spam. <a href='"+options.app_url_terms+"' target='_blank' style='text-decoration: none; color: #000; font-weight: 600;'>We promise.</a></div><br/><div style='font-size: 11px; color: #777; position: relative; width: 320px;'>By signing in, you agree to the <a href='"+options.app_url_terms+"' target='_blank' style='text-decoration: none; color: #555; font-weight: 600;'>terms and conditions</a>. Enter your own email address only.</div><script>if(window.location.hash.length > 1){ var rtxt = document.getElementById('robottxt'); rtxt.style.color = '#C00'; rtxt.innerHTML = window.location.hash.substring(1);}</script></body></html>");
   });
   app.post("/act/emailauth_login", function(req, res){

@@ -139,7 +139,7 @@
     }
     if(t3 && t3 !== t2){
       // we moved to a different element (from t2 to t3).
-      if(t2 && t2.onDragLeaveOrUp) t2.onDragLeaveOrUp(e,t2);
+      if(t2 && t2.onDragLeaveOrUp) t2.onDragLeaveOrUp(e,t2,t3);
       if(t3 && t3.onDragEnter) t3.onDragEnter(e,t3);
     }
     if(t3 && t3.onDragOver) t3.onDragOver(e,t3);
@@ -185,17 +185,17 @@ $.fn.onDnLeaveOrUp    = function(fn){this.each(function(i,el){el.onDnLeaveOrUp  
 $.fn.onDragEnter      = function(fn){this.each(function(i,el){el.onDragEnter      = fn;});return this;};
 $.fn.onDragOver       = function(fn){this.each(function(i,el){el.onDragOver       = fn;});return this;};
 $.fn.onDragLeaveOrUp  = function(fn){this.each(function(i,el){el.onDragLeaveOrUp  = fn;});return this;};
-$.eventToElXY         = function(e, el){
+$.eventToElXY         = function(e, el, xyBeyond){
   var o  = $(el).offset();
   var w  = $(el).width() ||1;
   var h  = $(el).height()||1;
   var relX  = e.pageX - o.left;
   var relY  = e.pageY - o.top;
-  return {
-    x:  relX, 
-    y:  relY, 
-    px: Math.max(0, Math.min(1.0, relX / w)),
-    py: Math.max(0, Math.min(1.0, relY / h))
+  return { 
+    x:  relX,
+    y:  relY,
+    px: xyBeyond?(relX / w):Math.max(0, Math.min(1.0, relX / w)),
+    py: xyBeyond?(relY / h):Math.max(0, Math.min(1.0, relY / h))
   };
 };
 

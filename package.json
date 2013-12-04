@@ -1,6 +1,6 @@
 {
   "name": "buttress",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Buttress is a supportive rapid prototyping library for NodeJS that provides both server and client helpers.",
   "author": "Adam Kumpf <akumpf@gmail.com>",
   "contributors": [
