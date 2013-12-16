@@ -26,8 +26,8 @@ var defaultOptions = {
   email_from_name:      "EmailAuth Helpdesk",
   email_user:           "asdf@gmail.com",
   email_pass:           "passwordz",
-  email_login_subject:  "EmailAuth: Login Key for ${APP_NAME} -- @${DATE_B36_M4}",  
-  email_login_bodyHTML: "Hello from <b>${APP_NAME}</b>.<h3>Here is your requested access key.</h3><h2><a style='text-decoration: none; font-weight: 600;' href='${CONFIRM_URL}' target='${LINK_TARGET}'>Click to Sign In to ${APP_NAME}</a></h2><br/>This is a single-use link and must be verified within ${TOKEN_TIME}.<br/>For your own security, do not forward or share this email with anyone else.<br/>By clicking Sign In, you agree to the ${APP_NAME} <a href='${APP_TERMS}' style='text-decoration: none;'>terms and conditions</a><br/><br/>&mdash; see you soon!<br/><br/>The ${APP_NAME} Team<br/><br/><span style='font-size: 11px; color: #777;'>- - - - - - -<br/><br/>If you did not request a sign in key and are recieving this email in error, please <a href='mailto:${FROM_EMAIL}?subject=${APP_NAME} Unauthorized Sign In Report&body=Hello ${APP_NAME} Team,%0D%0A%0D%0AI am writing to report an unauthorized sign in request, from IP: ${FROM_IP}, to my email: ${TO_EMAIL}.%0D%0A%0D%0A- - - -%0D%0A%0D%0AInclude additional details below, if any:%0D%0A '>let us know</a>.<br/>For your records, this login request was made from IP: ${FROM_IP}</span>" 
+  email_login_subject:  "EmailAuth: Sign In Key for ${APP_NAME} -- @${DATE_B36_M4}",  
+  email_login_bodyHTML: "Hello from <b>${APP_NAME}</b>.<h3>Here is your requested SignIn Key.</h3><h2><a style='text-decoration: none; font-weight: 600;' href='${CONFIRM_URL}' target='${LINK_TARGET}'>Click to Sign In to ${APP_NAME}</a></h2><br/>This is a single-use link and must be verified within ${TOKEN_TIME}.<br/><br/>For your own security, do not forward or share this email with anyone else.<br/>By clicking Sign In, you agree to the ${APP_NAME} <a href='${APP_TERMS}' style='text-decoration: none;'>terms and conditions</a><br/><br/>&mdash; see you soon!<br/><br/>The ${APP_NAME} Team<br/><br/><span style='font-size: 11px; color: #777;'>- - - - - - -<br/><br/>If you did not request a sign in key and are recieving this email in error, please <a href='mailto:${FROM_EMAIL}?subject=${APP_NAME} Unauthorized Sign In Report&body=Hello ${APP_NAME} Team,%0D%0A%0D%0AI am writing to report an unauthorized sign in request, from IP: ${FROM_IP}, to my email: ${TO_EMAIL}.%0D%0A%0D%0A- - - -%0D%0A%0D%0AInclude additional details below, if any:%0D%0A '>let us know</a>.<br/>For your records, this login request was made from IP: ${FROM_IP}</span>" 
 }; 
 // --
 // Alternatively, you can specify email provider directly via host/ssh/port params and they'll override the service.
@@ -180,7 +180,9 @@ exports.init = function(options){
     } 
     res.end("<html lang='en-US' dir='ltr'><head><title>Sign In to "+options.app_name+"</title></head><body style='padding: 15px; font-family: Arial; background: #EEE; color: #333; padding-top: 10px; line-height: 14px;'><form method='post' action='/act/emailauth_login' onsubmit='if(window.formWasSubmitted) return false; window.formWasSubmitted = true; return true;'><b>Sign In to "+options.app_name+"</b><br/><input id='emailin' style='width: 318px; padding: 5px; font-size: 14px; margin-top: 15px;' type='email' name='email' placeholder='Email' />"+
     recaptchaHTML+ 
-    "<input type='submit' style='border: none; border-radius: 0; background: #333; color: #FFF; line-height: 34px; cursor: pointer; position: relative; font-size: 16px; width: 318px; height: 34px; -webkit-appearance: none;' value='Sign In' onclick=\""+onclick+"\" /></form><div style='font-size: 12px; position: relative; width: 270px;'>Oh, and we'll never send you spam. <a href='"+options.app_url_terms+"' target='_blank' style='text-decoration: none; color: #000; font-weight: 600;'>We promise.</a></div><br/><div style='font-size: 11px; color: #777; position: relative; width: 320px;'>By signing in, you agree to the <a href='"+options.app_url_terms+"' target='_blank' style='text-decoration: none; color: #555; font-weight: 600;'>terms and conditions</a>. Enter your own email address only.</div><script>if(window.location.hash.length > 1){ var rtxt = document.getElementById('robottxt'); rtxt.style.color = '#C00'; var h = window.location.hash.substring(1); var o = (h||'').split(':'); rtxt.innerHTML = o[1]||''; document.getElementById('emailin').value = o[0];}</script></body></html>"); 
+    "<input type='submit' style='border: none; border-radius: 0; background: #333; color: #FFF; line-height: 34px; cursor: pointer; position: relative; font-size: 16px; width: 318px; height: 34px; -webkit-appearance: none;' value='Sign In' onclick=\""+onclick+"\" /></form><div style='font-size: 12px; position: relative; width: 270px;'>We'll never send you spam. <a href='"+options.app_url_terms+"' target='_blank' style='text-decoration: none; color: #000; font-weight: 600;'>We promise.</a></div><br/><div style='font-size: 11px; color: #777; position: relative; width: 320px;'>By signing in, you agree to the <a href='"+options.app_url_terms+"' target='_blank' style='text-decoration: none; color: #555; font-weight: 600;'>terms and conditions</a>. Enter your own email address only.</div><script>if(window.location.hash.length > 1){ var rtxt = document.getElementById('robottxt'); rtxt.style.color = '#C00'; var h = window.location.hash.substring(1); var o = (h||'').split(':'); rtxt.innerHTML = o[1]||''; document.getElementById('emailin').value = o[0];}</script>"+
+    "<script>try{window.parent.postMessage({t:'emailauth:open'},window.location.origin);}catch(ex){console.warn(ex);}</script>"+
+    "</body></html>");
   });
   app.post("/act/emailauth_login", function(req, res){
     if(!req.session) return res.end("ERROR: No session object.");
@@ -201,7 +203,9 @@ exports.init = function(options){
           console.log("failed to send email to: "+useremail);
           return res.redirect("/act/emailauth_login#Email Failed To Send. Retry Later.");
         }
-        res.end("<html><head><title>Email Sent</title></head><body style='padding: 25px; font-family: Arial; background: #EEE; color: #333;'><h2>Email Sent</h2>Please check your inbox and click the <b>Sign In</b> link.<br/><br/>After that, you'll be fully signed in and confirmed. No additional password needed.<br/><br/>See you soon!</body></html>");
+        res.end("<html><head><title>Email Sent</title></head><body style='padding: 25px; font-family: Arial; background: #EEE; color: #333;'><h2>Email Sent</h2>Please check your inbox and click the <b>Sign In</b> link.<br/><br/>After that, you'll be fully signed in and confirmed. No additional password needed.<br/><br/>See you soon!"+
+        "<script>try{window.parent.postMessage({t:'emailauth:login'},window.location.origin);}catch(ex){console.warn(ex);}</script>"+
+        "</body></html>");
         if(options.onloginattempt){
           options.onloginattempt(useremail, ip);
         }
@@ -252,12 +256,12 @@ exports.init = function(options){
       if(err) return res.end("ERROR: Invalid token request");
       //console.log(data);
       var t = new Date().getTime();
-      if(!data){
+      if(!data){ 
         if(req.session && req.session.auth && req.session.auth.loggedin){
           //console.log("eauth: user reconfirmed old token, but was already logged in. just redirect.");
           return res.redirect(options.app_url_postlogin);
         }
-        return res.end("<html><head><title>Confirm</title></head><body style='padding: 25px; font-family: Arial; background: #EEE; color: #333;'><h2>Whoops!</h2><br/><b>Your temporary sign in key was not found.</b><br/><br/><br/>Did you submit your email address too long ago?<br/>Perhaps you should <a href='"+options.app_url_base+"/act/emailauth_login'>sign in again</a>.</body></html>");
+        return res.end("<html><head><title>Confirm</title></head><body style='padding: 25px; font-family: Arial; background: #EEE; color: #333;'><h2>Whoops!</h2><br/><b>Your temporary SignIn Key was not found.</b><br/><br/><br/>Did you submit your email address too long ago?<br/>Perhaps you should <a href='"+options.app_url_base+"/act/emailauth_login'>sign in again</a>.</body></html>");
       }
       if(data.type !== "eauthtoken" || !data.email || !data.ip || !data.cookie || !data.cookie.expires || data.cookie.expires < t){
         return res.end("ERROR: Expired.");

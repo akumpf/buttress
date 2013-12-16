@@ -140,7 +140,7 @@
     if(t3 && t3 !== t2){
       // we moved to a different element (from t2 to t3).
       if(t2 && t2.onDragLeaveOrUp) t2.onDragLeaveOrUp(e,t2,t3);
-      if(t3 && t3.onDragEnter) t3.onDragEnter(e,t3);
+      if(t3 && t3.onDragEnter) t3.onDragEnter(e,t3,t2);
     }
     if(t3 && t3.onDragOver) t3.onDragOver(e,t3);
   }
