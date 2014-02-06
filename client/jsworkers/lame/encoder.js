@@ -1,6 +1,11 @@
 // Used under LGPL, same as LAME.
 // Thanks to akrennmair -> https://github.com/akrennmair/speech-to-server/blob/master/encoder.js
 
+self.console        = self.console||{};
+self.console.log    = self.console.log||function(){};
+self.console.warn   = self.console.warn||function(){};
+self.console.error  = self.console.error||function(){};
+
 importScripts('./libmp3lame.js');
 
 var mp3codec; 

@@ -21,6 +21,7 @@
     "RTCSessionDescription",
     // --
     "notifications",
+    "localStorage",
     // --
     "URL"
   ];
@@ -29,7 +30,7 @@
     "temporaryStorage",
     "persistentStorage"
   ];
-  var docProps  = [
+  var docProps  = [  
     "visibilityState",
   ]; 
   // --
@@ -171,6 +172,30 @@ window.changeCSS      = function(myclass,element,value) {
     //console.log("inserting rule: ", myclass, element, value, newStyle);
   }
 };
+window.readCSS = function(myclass,element){
+  var CSSRules;
+  if (document.all) {
+    CSSRules = 'rules';
+  }
+  else if (document.getElementById) {
+    CSSRules = 'cssRules';
+  }
+  var foundMatch = false;
+  var s = 0;
+  if(!document.styleSheets) return console.warn("no document.styleSheets");
+  for(s=0; s<document.styleSheets.length; s++){
+    if(!document.styleSheets[s][CSSRules]){
+      //console.warn("no inner styleSheet rule.", CSSRules, document.styleSheets[s]); 
+      continue;
+    }
+    for (var i = 0; i < document.styleSheets[s][CSSRules].length; i++) {
+      if (document.styleSheets[s][CSSRules][i].selectorText == myclass) {
+        return document.styleSheets[s][CSSRules][i].style[element];
+      }
+    }  
+  }
+  return null;
+};
 window.escapeHTML     = function(msg){
   return (msg||"").replace(/\&/g, "&amp;").replace(/\</g, "&lt;").replace(/\>/g, "&gt;");
 };
@@ -214,6 +239,12 @@ $.fn.dontScrollParent = function(exceptions){
   });
 };
 // --
+
+function getQueryParamByName(name) {
+  name = (name||"").replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+  return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 // Screenfull (MIT License)
 // https://github.com/sindresorhus/screenfull.js

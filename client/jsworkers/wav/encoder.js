@@ -2,6 +2,11 @@
 // see: https://ccrma.stanford.edu/courses/422/projects/WaveFormat/ for spec details.
 // --
 
+self.console        = self.console||{};
+self.console.log    = self.console.log||function(){};
+self.console.warn   = self.console.warn||function(){};
+self.console.error  = self.console.error||function(){};
+
 function interleave(chanData){
   var chans  = chanData.length;
   if(chans === 1) return chanData[0];
@@ -16,7 +21,7 @@ function interleave(chanData){
       result[i*chans+c] = chanData[c][i];
     }
   }
-  console.log(result);
+  //console.log(result);
   return result;
 }
 function floatTo16BitPCM(output, offset, input){
@@ -75,14 +80,17 @@ self.onmessage = function(e) {
     buffer  = new ArrayBuffer(2*len*chans); // + samples.length * 2); // 44 + PCM points * 2
     dv      = new DataView(buffer);
     // --
-    var chanData;
+    //var chanData;
+    var idata;
     if(chans === 1){
-      chanData = [e.data.buf1||[]];
+      //chanData = [e.data.buf1||[]];
+      idata = e.data.buf1||[];
     }else{
-      chanData = [e.data.buf1||[], e.data.buf2||[]];
+      //chanData = [e.data.buf1||[], e.data.buf2||[]];
+      idata = interleave([e.data.buf1||[], e.data.buf2||[]]);
     }
     //console.log("wav: chans="+chans+", len="+len);
-    var idata = interleave(chanData);
+    //var idata = interleave(chanData);
     //console.log("wav: idata len="+idata.length);
     floatTo16BitPCM(dv, 0, idata); 
     self.postMessage({cmd: 'data', buf: new Uint8Array(buffer)});

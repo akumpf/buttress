@@ -5,10 +5,12 @@ var myname  = "lessr: ";
 var less    = require("less");
 var fs      = require("fs"); 
 // --
-exports.addFile = function(absLessFile, absCSSFile, autoUpdate, options){
+exports.addFile = function(absLessFile, absCSSFile, autoUpdate, options, extraWatches){
   var updates = 0;
   var optimizing = false;
   var runWhenDone = false;
+  options = options||{};
+  var fname = options.filename||"";
   function onOptDone(){
     optimizing = false;
     if(runWhenDone){
@@ -49,7 +51,7 @@ exports.addFile = function(absLessFile, absCSSFile, autoUpdate, options){
           // Write output
           fs.writeFileSync(absCSSFile, cssString, 'utf8');
           var t1 = new Date().getTime() - t0;
-          console.log(myname+"created css in "+t1+"ms"); 
+          console.log(myname+"-> "+fname+": created css in "+t1+"ms");
           onOptDone();
         }catch(ex){
           console.warn(myname+"error creating CSS from LESS:");
@@ -58,12 +60,21 @@ exports.addFile = function(absLessFile, absCSSFile, autoUpdate, options){
         }
       });
       if(updates === 0 && autoUpdate){
-        console.log(myname+"adding autoUpdate.");
+        console.log(myname+"-> "+fname+": adding autoUpdate.");
         fs.watchFile(absLessFile, {interval: options.autoMS||5007}, function (curr, prev) {
           if(prev.mtime !== curr.mtime){
             doOptimization();
           } 
-        }); 
+        });
+        if(extraWatches){
+          for(var i=0; i<extraWatches.length; i++){
+             fs.watchFile(extraWatches[i], {interval: options.autoMS||5007}, function (curr, prev) {
+              if(prev.mtime !== curr.mtime){
+                doOptimization();
+              } 
+            }); 
+          }
+        }
       }
       updates++;
     });

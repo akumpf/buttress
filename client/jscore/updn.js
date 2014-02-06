@@ -50,6 +50,7 @@
 */
 // --
 (function(){
+  window._updnEnabled = true;
   var dnOrigTarget = {};
   var dnPrevTarget = {};
   var dnHasLeft    = {};
@@ -115,6 +116,7 @@
     if(t.onDn) t.onDn(e,t);
   }
   // -- MOUSE/TOUCH EVENT PROCESSORS --
+  var t1, t2, t3, hasLeft;
   function onEventDrag(e){
     if(!e.target||e.target.tagName!=="INPUT"){
       if(e.preventDefault) e.preventDefault();
@@ -122,12 +124,12 @@
     // --
     e.id  = e.id||e.identifier;
     if(e.id === undefined) e.id = -1;
-    var t1 = dnOrigTarget[e.id];
+    t1 = dnOrigTarget[e.id];
     if(!t1) return; // NOT DOWN.
     // --
-    var hasleft = dnHasLeft[e.id]||false;
-    var t2 = dnPrevTarget[e.id]||{};
-    var t3 = document.elementFromPoint(e.clientX, e.clientY);
+    hasleft = dnHasLeft[e.id]||false;
+    t2 = dnPrevTarget[e.id]||{}; 
+    t3 = document.elementFromPoint(e.clientX, e.clientY); 
     // --
     dnPrevTarget[e.id] = t3; // save the previous target for this dn event.
     // --
@@ -185,12 +187,23 @@ $.fn.onDnLeaveOrUp    = function(fn){this.each(function(i,el){el.onDnLeaveOrUp  
 $.fn.onDragEnter      = function(fn){this.each(function(i,el){el.onDragEnter      = fn;});return this;};
 $.fn.onDragOver       = function(fn){this.each(function(i,el){el.onDragOver       = fn;});return this;};
 $.fn.onDragLeaveOrUp  = function(fn){this.each(function(i,el){el.onDragLeaveOrUp  = fn;});return this;};
-$.eventToElXY         = function(e, el, xyBeyond){
-  var o  = $(el).offset();
-  var w  = $(el).width() ||1;
-  var h  = $(el).height()||1;
-  var relX  = e.pageX - o.left;
-  var relY  = e.pageY - o.top;
+$.eventToElXY         = function(e, el, xyBeyond, lastResizeTime){
+  var o,w,h,relX,relY;
+  // --
+  if(lastResizeTime && el.owh && lastResizeTime < el.owh.lrt){
+    var owh = el.owh;
+    o     = owh.o;
+    w     = owh.w;
+    h     = owh.h;
+  }else{
+    var $el   = $(el);
+    o         = $el.offset();
+    w         = $el.width() ||1;
+    h         = $el.height()||1;
+    if(lastResizeTime) el.owh = {o:o,w:w,h:h,lrt:new Date().getTime()};
+  }
+  relX      = e.pageX - o.left;
+  relY      = e.pageY - o.top;
   return { 
     x:  relX,
     y:  relY,
