@@ -12,6 +12,7 @@ var atb    = exports;
 // --
 exports.express     = require("express");
 exports.underscore  = require("underscore");
+exports.compression = require("compression");
 // --
 var express = exports.express;
 var _       = exports.underscore;
