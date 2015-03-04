@@ -33,12 +33,12 @@ exports.addFile = function(absLessFile, absCSSFile, autoUpdate, options, extraWa
       // --
       var dataString = (data||"").toString();
       less.render(dataString, options)
-	      .then(function(output) {
-	        // output.css = string of css
-	        // output.map = string of sourcemap
-	        // output.imports = array of string filenames of the imports referenced
-					// --
-					var cssString = output.css;
+	.then(function(output) {
+	  // output.css = string of css
+	  // output.map = string of sourcemap
+	  // output.imports = array of string filenames of the imports referenced
+	  // --
+	  var cssString = output.css;
           if(!options.compress){
             cssString = cssString.replace(/\n\ \ /g, "\n"); 
           }
