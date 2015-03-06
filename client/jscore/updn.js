@@ -19,6 +19,10 @@
 // Note 5: All events are given an id as e.id. Use this id to keep track
 //         of which interaction point is where (i.e., multitouch).
 //
+// Note 6: If you REALLY need native touch/mouse events for something, you can
+//         set a property on an element as noupdn=1 and it (+ all children) will
+//         be ignored by updn:  example -> $("#content").get(0).noupdn = 1;
+//
 // questions? akumpf@gmail.com
 // created for Fiddlewax: https://fiddlewax.com
 // --
@@ -55,10 +59,24 @@
   var dnPrevTarget = {};
   var dnHasLeft    = {};
   // -- TOUCH --
+	function preventDefaultIfShould(e){
+		if(e.preventDefault){
+			if(!e.target){e.preventDefault();return true;}
+			var t = e.target;
+			if(t.tagName==="INPUT"||t.tagName==="SELECT") return false;
+			// check to see if any parent has "noupdn" defined which would disable noupdn checking.
+			while(t){
+				if(t.noupdn || t.contentEditable=="true") return false;
+				t = t.parentElement;
+			}
+			// --
+			e.preventDefault();
+			return true;
+		}
+	}
   function onTouchStart(es){ 
-    if(!es.target||(es.target.tagName!=="INPUT"&&es.target.tagName!=="SELECT")){
-      if(es.preventDefault) es.preventDefault();
-      document.activeElement.blur();
+		if(preventDefaultIfShould(es)){
+			document.activeElement.blur();
     }else{
       if(es.target) es.target.focus();
     }
@@ -83,23 +101,20 @@
   } 
   function onTouchDrag(es){ 
     // Always prevent touch drag, or user can drag HTML body in browser. :(
-    if(es.preventDefault) es.preventDefault();
+    preventDefaultIfShould(es);
     // --
     var touches = es.changedTouches||es.touches||[];
     for(var i=0; i<touches.length; i++) onEventDrag(touches[i], true);
   }
   function onTouchEndDrag(es){
-    if(!es.target||es.target.tagName!=="INPUT"){
-      if(es.preventDefault) es.preventDefault();
-    }
+		preventDefaultIfShould(es);
     // --
     var touches = es.changedTouches||es.touches||[];
     for(var i=0; i<touches.length; i++) onEventEndDrag(touches[i], true);
   }
   // -- MOUSE -- 
   function onMouseDown(e){
-    if(!e.target||(e.target.tagName!=="INPUT"&&e.target.tagName!=="SELECT")){
-      if(e.preventDefault) e.preventDefault();
+		if(preventDefaultIfShould(e)){
       document.activeElement.blur();
     }else{
       if(e.target) e.target.focus();
@@ -118,9 +133,7 @@
   // -- MOUSE/TOUCH EVENT PROCESSORS --
   var t1, t2, t3, hasLeft;
   function onEventDrag(e){
-    if(!e.target||e.target.tagName!=="INPUT"){
-      if(e.preventDefault) e.preventDefault();
-    } 
+    preventDefaultIfShould(e);
     // --
     e.id  = e.id||e.identifier;
     if(e.id === undefined) e.id = -1;
@@ -147,9 +160,7 @@
     if(t3 && t3.onDragOver) t3.onDragOver(e,t3);
   }
   function onEventEndDrag(e){
-    if(!e.target||e.target.tagName!=="INPUT"){
-      if(e.preventDefault) e.preventDefault();
-    }
+    preventDefaultIfShould(e);
     // --
     e.id  = e.id||e.identifier;
     if(e.id === undefined) e.id = -1;
